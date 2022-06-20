@@ -7,24 +7,77 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## GitHub Documents
+# My First Vignette  
 
-This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+I am creating this vignette to describe how to read and summarize dtat from an API. I will use Pokemon data, because my young kids are obsessed with Pokemon, and I hoped they could help me ideate for this project.  
 
-## Including Code
+## Required packages
 
-You can include R code in the document as follows:
+I used the following packages in the creation of the vignette:  
+- `httr`: I used this to access the API  
+- `jsonlite`: I used this to convert the Pokemon data to a dataframe    
 
-```{r cars}
-summary(cars)
+To get started, install and load the packages listed above: 
+
+```{r Install and Read in Packages, message=FALSE}
+install.packages("httr")
+require(httr)
+
+install.packages("jsonlite")
+require(jsonlite)
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
+```{r}
+base <- "https://pokeapi.co/api/v2/"
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+endpoint <- "pokemon"
+
+name <- "charizard"
+
+call1 <- paste(base, endpoint, "/", name, sep = "")
+
+getPokemon <- GET(call1)
+getPokemonText <- content(getPokemon, "text")
+
+getPokemonJson <- fromJSON(getPokemonText, flatten = TRUE)
+# getPokemonDF <- as.data.frame(getPokemonJson)
+# View(getPokemonDF)
+
+str(getPokemonJson$forms, max.level = 1)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Functions to Contact the Pokemon API
+
+The Pokemon API is nice because it does not require users to get a key and authenticate. This makes access a bit simpler than other APIs. 
+
+You should write function(s) to contact your chosen API and return well-formatted, parsed data. That is, your function should parse the data to be returned into a nice data frame the user can then happily deal with.
+– Your function(s) should allow the user to customize their query to return specific data.
+– You do not need to allow the user to query all parts of the API but should allow for at least six modifications or endpoints, etc.
+– The function(s) should be user friendly. That is, it should be easy to specify the options. For example, the ticker types for the financial API has options you can specify such as:
+∗ ADR (American Depository Receipt)
+∗ CEF (Closed-End Fund)
+∗ CS (Common stock)
+The user shouldn’t be required to use the abbreviation and should be able to use the quoted string for use-ability. (You’d want to give the user the option of specifying the abbreviation or the quoted string.
+For the string, you may want to check the string after converting it to all lower-case and then map it to the abbreviation for querying).
+
+```{r Functions to contact Pokemon API}
+
+```
+
+
+## Exploratory Data Analysis  
+
+- You should pull data from at least two endpoints (possibly combining them into one)  
+- You should create one (or more) relevant new variable that is a function of the variables from a data set you use  
+- You should create some contingency tables  
+- You should create numerical summaries for some quantitative variables at each setting of some of your categorical variables  
+- You should create at least five plots utilizing coloring, grouping, etc. All plots should have nice labels and titles.  
+- You should have at least one bar plot, one histogram, one box plot, and one scatter plot  
+- Your code chunks should be shown in the final document unless they are set up chunks or other behind the scenes things that aren’t important.  
+
+
+
+
+
