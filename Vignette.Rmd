@@ -14,17 +14,21 @@ I am creating this vignette to describe how to read and summarize dtat from an A
 ## Required packages
 
 I used the following packages in the creation of the vignette:  
-- `httr`: I used this to access the API  
-- `jsonlite`: I used this to convert the Pokemon data to a dataframe    
+- [`httr`]{https://httr.r-lib.org/}: I used this to access the API  
+- [`jsonlite`]{https://cran.r-project.org/web/packages/jsonlite/index.html}: I used this to convert the Pokemon data to a dataframe    
+- [`tidyverse`]{https://www.tidyverse.org/}: I used this set of packages for things like piping
 
 To get started, install and load the packages listed above: 
 
 ```{r Install and Read in Packages, message=FALSE}
 install.packages("httr")
-require(httr)
+library(httr)
 
 install.packages("jsonlite")
-require(jsonlite)
+library(jsonlite)
+
+install.packages("tidyverse")
+library(tidyverse)
 ```
 
 
@@ -33,18 +37,15 @@ base <- "https://pokeapi.co/api/v2/"
 
 endpoint <- "pokemon"
 
-name <- "charizard"
+name <- 898
 
 call1 <- paste(base, endpoint, "/", name, sep = "")
 
-getPokemon <- GET(call1)
-getPokemonText <- content(getPokemon, "text")
+pokemon <- GET(call1) %>% content()
 
-getPokemonJson <- fromJSON(getPokemonText, flatten = TRUE)
-# getPokemonDF <- as.data.frame(getPokemonJson)
-# View(getPokemonDF)
+pokemon$name
 
-str(getPokemonJson$forms, max.level = 1)
+
 ```
 
 
@@ -53,6 +54,46 @@ str(getPokemonJson$forms, max.level = 1)
 The Pokemon API is nice because it does not require users to get a key and authenticate. This makes access a bit simpler than other APIs. 
 
 You should write function(s) to contact your chosen API and return well-formatted, parsed data. That is, your function should parse the data to be returned into a nice data frame the user can then happily deal with.
+
+First, I created a function to contact the Pokemon API and get data. Then I got a list of all the Pokemon. 
+
+```{r get all Pokemon data}
+getAll <- function(url){
+  out <- NULL
+  while (!is.null(url)){
+    
+    request <- GET(url)
+    contentPokemon <- content(request)
+    out <- c(out, contentPokemon$results)
+    url <- contentPokemon$`next`
+  }
+  out
+}
+
+
+pokemon <- getAll("https://pokeapi.co/api/v2/pokemon")
+str(pokemon[[1]])
+```
+
+Next, I made a function that let me look up values for variables I will later associate with Pokemon. 
+
+```{r}
+lookup <- function(url, name="name"){
+  all <- getAll(url)
+  
+  url <- all %>% map_chr("url")
+  name <- all %>% map_chr(name)
+  #name[name == "unkown"] <- NA
+  
+  set_names(name, url)
+}
+
+type <- lookup("https://pokeapi.co/api/v2/type")
+habitat <- lookup("https://pokeapi.co/api/v2/pokemon-habitat")
+stats <- lookup("https://pokeapi.co/api/v2/stat")
+```
+
+
 – Your function(s) should allow the user to customize their query to return specific data.
 – You do not need to allow the user to query all parts of the API but should allow for at least six modifications or endpoints, etc.
 – The function(s) should be user friendly. That is, it should be easy to specify the options. For example, the ticker types for the financial API has options you can specify such as:
