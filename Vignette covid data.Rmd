@@ -1,0 +1,132 @@
+---
+title: "Vignette"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# My First Vignette  
+
+I am creating this vignette to describe how to read and summarize data from an API. I will use COVID-19 data, because my attempts to work with the Pokemon API were unsuccessful.  
+
+## Required packages
+
+I used the following packages in the creation of the vignette:  
+- [`httr`]{https://httr.r-lib.org/}: I used this to access the API  
+- [`jsonlite`]{https://cran.r-project.org/web/packages/jsonlite/index.html}: I used this to convert the Pokemon data to a dataframe    
+- [`tidyverse`]{https://www.tidyverse.org/}: I used this set of packages for things like piping  
+- [`dplyr`]{}:  
+- [`stringr`]{}:   
+
+
+To get started, install and load the packages listed above: 
+
+```{r Install and Read in Packages, message=FALSE}
+#install.packages("httr")
+library(httr)
+
+#install.packages("jsonlite")
+library(jsonlite)
+
+#install.packages("tidyverse")
+library(tidyverse)
+
+library(dplyr)
+library(stringr)
+```
+
+
+## Functions to Contact the API
+
+The COVID-19 API is nice because it does not require users to get a key and authenticate. This makes access a bit simpler than some other APIs. If you want, you can pay for more than just the basic authorization to the API. 
+
+
+```{r}
+myData <- httr::GET(url = "https://api.covid19api.com/")
+
+parsed <- fromJSON(rawToChar(myData$content))
+str(parsed, max.level = 1)
+
+```
+I wrote a function where the user inputs a path to a column of data they want, and the function returns the data. 
+
+```{r}
+getColumn <- function(path){
+  base <- "https://api.covid19api.com"
+  data <- httr::GET(url = paste(base,path, sep = ""))
+  
+  myList <- fromJSON(rawToChar(data$content))
+  return(myList)
+}
+```
+
+Then I tested the function. 
+```{r}
+path <- parsed$countriesRoute$Path
+cList <- getColumn(path)
+
+str(cList, max.level = 1)
+
+```
+```{r}
+path <- parsed$summaryRoute$Path
+summary <- getColumn(path)
+
+str(summary, max.level = 1)
+```
+I made a program to contact the COVID-19 API and return a dataframe of information for the user to view. 
+
+```{r}
+countries <- data.frame('Country' = cList$Slug)
+
+vec <- summary$Countries
+
+summ<- vector("list", length(vec))
+
+for (i in 1:195) {
+  summ[[i]] <- data.frame(
+    Country = vec$Slug[i],
+    NewConfirmed = vec$NewConfirmed[i],
+    TotalConfirmed = vec$TotalConfirmed[i],
+    NewDeaths = vec$NewDeaths[i],
+    TotalDeaths = vec$TotalDeaths[i],
+    NewRecovered = vec$NewRecovered[i],
+    TotalRecovered = vec$TotalRecovered[i]
+    )
+}
+
+summ <- do.call(rbind, summ)
+
+```
+
+
+
+– Your function(s) should allow the user to customize their query to return specific data.
+– You do not need to allow the user to query all parts of the API but should allow for at least six modifications or endpoints, etc.
+– The function(s) should be user friendly. That is, it should be easy to specify the options. For example, the ticker types for the financial API has options you can specify such as:
+∗ ADR (American Depository Receipt)
+∗ CEF (Closed-End Fund)
+∗ CS (Common stock)
+The user shouldn’t be required to use the abbreviation and should be able to use the quoted string for use-ability. (You’d want to give the user the option of specifying the abbreviation or the quoted string.
+For the string, you may want to check the string after converting it to all lower-case and then map it to the abbreviation for querying).
+
+```{r Functions to contact Pokemon API}
+
+```
+
+
+## Exploratory Data Analysis  
+
+- You should pull data from at least two endpoints (possibly combining them into one)  
+- You should create one (or more) relevant new variable that is a function of the variables from a data set you use  
+- You should create some contingency tables  
+- You should create numerical summaries for some quantitative variables at each setting of some of your categorical variables  
+- You should create at least five plots utilizing coloring, grouping, etc. All plots should have nice labels and titles.  
+- You should have at least one bar plot, one histogram, one box plot, and one scatter plot  
+
+
+
+
+

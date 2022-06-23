@@ -16,36 +16,25 @@ I am creating this vignette to describe how to read and summarize dtat from an A
 I used the following packages in the creation of the vignette:  
 - [`httr`]{https://httr.r-lib.org/}: I used this to access the API  
 - [`jsonlite`]{https://cran.r-project.org/web/packages/jsonlite/index.html}: I used this to convert the Pokemon data to a dataframe    
-- [`tidyverse`]{https://www.tidyverse.org/}: I used this set of packages for things like piping
+- [`tidyverse`]{https://www.tidyverse.org/}: I used this set of packages for things like piping  
+- [`dplyr`]{}:  
+- [`stringr`]{}:   
+
 
 To get started, install and load the packages listed above: 
 
 ```{r Install and Read in Packages, message=FALSE}
-install.packages("httr")
+#install.packages("httr")
 library(httr)
 
-install.packages("jsonlite")
+#install.packages("jsonlite")
 library(jsonlite)
 
-install.packages("tidyverse")
+#install.packages("tidyverse")
 library(tidyverse)
-```
 
-
-```{r}
-base <- "https://pokeapi.co/api/v2/"
-
-endpoint <- "pokemon"
-
-name <- 898
-
-call1 <- paste(base, endpoint, "/", name, sep = "")
-
-pokemon <- GET(call1) %>% content()
-
-pokemon$name
-
-
+library(dplyr)
+library(stringr)
 ```
 
 
@@ -55,7 +44,122 @@ The Pokemon API is nice because it does not require users to get a key and authe
 
 You should write function(s) to contact your chosen API and return well-formatted, parsed data. That is, your function should parse the data to be returned into a nice data frame the user can then happily deal with.
 
-First, I created a function to contact the Pokemon API and get data. Then I got a list of all the Pokemon. 
+First, I created a function to contact the Pokemon API and get API data:  
+
+```{r}
+getPoke <- function(path){
+  out <- tryCatch(
+    {
+      url <- paste("https://pokeapi.co/api/v2/", path, sep = "")
+      result <- GET(url, timeout(10))
+      return(result)  
+    }
+    
+  )
+}
+```
+
+Then I created a function to group by categorical attributes: 
+
+```{r}
+pokeSummary <- function(df, infoType){
+  if (infoType == "habitat"){
+    # Count of pokemon in each habitat
+    group_by(df, habitat) %>% summarise(pokemonCount=n(), meanCaptureRate=round(mean(captureRate, na.rm = TRUE)))
+  } else if (infoType == "type"){
+    # Count of pokemon in each type
+    group_by(df, type) %>% summarise(pokemonCount=n(), meanCaptureRate=round(mean(captureRate, na.rm = TRUE)))
+  } else{
+    print("Invalid Request")
+  }
+}
+```
+
+Then I created a function where the user can select data by inputting a vector of pokemon names of interest: 
+
+```{r}
+poke.filter <- function(df, vec){
+  if (is.data.frame(df)){
+    # to check whether the object passed in df is a data frame
+    pokeFilter <- subset(df, pokemon %in% vec)
+    if (nrow(pokeFilter) > 0){
+      # Checks if any of the pokem  on to be filtered for were in the passed in pokeframe
+      if (nrow(pokeFilter) == length(vec)){
+        # Returns the filtered dataframe if all pokemon passed in were found
+        pokeFilter
+      } else{
+        # If any requested pokemon were not found and returns the dataframe of the pokemon that were found
+        print("Some of the requested pokemon were not found. Here are your the ones we did find: ")
+        pokeFilter
+      }
+    } else{
+      # If none of the desired pokemon were found
+      print("None of the requested pokemon were found.")
+    }
+  } else{
+    # If the passed in pokeframe isn't a data frame
+    print("You must pass a data frame. ")
+  }
+}
+```
+
+Then I created a function that creates a data frame of the Pokemon info from the API so the user could query it: 
+
+```{r}
+getPokeDF <- function(){
+  pokeList <- getPoke("")
+
+  # JSON parser
+  pokeList <- jsonlite::fromJSON(content(pokeList, "text"), simplifyVector = FALSE)
+  numPokemon <- length(pokeList$pokemon_species)
+
+ df <- data.frame(idx = 1:numPokemon, pokemon = 1:numPokemon, speciesURL = 1:numPokemon, habitat = 1:numPokemon, captureRate = 1:numPokemon, type = 1:numPokemon, moves=1:numPokemon)
+  for ( i in 1:numPokemon){
+    # Include name, url, and index in df
+    df$pokemon[i] <- pokeList$pokemon_species[[i]]$name
+    df$speciesURL[i] <- pokeList$pokemon_species[[i]]$url
+    shortStr <- str_extract(substr(df$speciesURL[i],nchar(df$speciesURL[1])-4,nchar(df$speciesURL[1])), "(?<![0-9])/.*")
+    df$idx[i] <- substr(shortStr,2,nchar(shortStr)-1)
+    # First API call - gets species info (habitat, capture rate, base happiness)
+    currSpecies <- getPoke(paste("/pokemon-species/",df$idx[i],sep=""))
+    currSpecies <- jsonlite::fromJSON(content(currSpecies, "text"), simplifyVector = FALSE)
+    df$habitat[i] <- currSpecies$habitat[[1]]
+    df$captureRate[i] <- currSpecies$capture_rate
+    # Second API call - gets type and moves
+    currPokemon <- getPoke(paste("/pokemon/",df$idx[i],sep=""))
+    currPokemon <- jsonlite::fromJSON(content(currPokemon, "text"), simplifyVector = FALSE)
+    # Get pokemon moves
+    move<-vector()
+    if (length(currPokemon$moves)<5){
+      end <- length(currPokemon$moves)
+    } else{
+      end <- 5
+    }
+    for (k in 1:end){
+      move<-c(move,currPokemon$moves[[k]]$move$name)
+      move<-paste(move,collapse=",")}
+    # Get pokemon type
+    curType <- currPokemon$types
+    type <- ""
+    for (j in 1:length(curType)){
+      if (j==1){
+        type = curType[[j]]$type$name
+      } else {
+        type = paste(type,", ",curType[[j]]$type$name, sep="")
+      }
+    }
+    # Adding pokemon move to data frame
+    df$moves[i] <- move
+    # Adding pokemon type to data frame
+    df$type[i] <- type
+    Sys.sleep(1.5)
+    cat('\r', i)
+  }
+  df
+}
+```
+
+
 
 ```{r get all Pokemon data}
 getAll <- function(url){
@@ -70,12 +174,12 @@ getAll <- function(url){
   out
 }
 
-
-pokemon <- getAll("https://pokeapi.co/api/v2/pokemon")
-str(pokemon[[1]])
+ids <- getAll("https://pokeapi.co/api/v2/id")
+stats <- getAll("https://pokeapi.co/api/v2/stat")
+str(stats[[1]])
 ```
 
-Next, I made a function that let me look up values for variables I will later associate with Pokemon. 
+Next, I made a lookup function that let me look up values for variables I will later associate with Pokemon characters. 
 
 ```{r}
 lookup <- function(url, name="name"){
@@ -83,14 +187,26 @@ lookup <- function(url, name="name"){
   
   url <- all %>% map_chr("url")
   name <- all %>% map_chr(name)
-  #name[name == "unkown"] <- NA
+  name[name == "unkown"] <- NA
   
   set_names(name, url)
 }
 
+pokes <- lookup("https://pokeapi.co/api/v2/pokemon")
 type <- lookup("https://pokeapi.co/api/v2/type")
 habitat <- lookup("https://pokeapi.co/api/v2/pokemon-habitat")
 stats <- lookup("https://pokeapi.co/api/v2/stat")
+```
+
+Then I made the nice-looking database of Pokemon characters with their unique, interesting attributes: 
+
+```{r make pokemon tibble}
+
+name <- characters %>% map_chr("name")
+height <- characters %>% map_chr("height") %>% parse_integer("unknown")
+
+
+pokemon <- tibble::tibble(name, height)
 ```
 
 
@@ -116,7 +232,6 @@ For the string, you may want to check the string after converting it to all lowe
 - You should create numerical summaries for some quantitative variables at each setting of some of your categorical variables  
 - You should create at least five plots utilizing coloring, grouping, etc. All plots should have nice labels and titles.  
 - You should have at least one bar plot, one histogram, one box plot, and one scatter plot  
-- Your code chunks should be shown in the final document unless they are set up chunks or other behind the scenes things that aren’t important.  
 
 
 
