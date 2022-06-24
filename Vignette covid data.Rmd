@@ -174,10 +174,10 @@ plotCases <- function(country){
   data$Date <- as.Date(data$Date)
   
   # Plot the data
-  ggplot(data, aes(x = data$Date, y = data$Cases)) +
+  ggplot(data, aes(x = Date, y = Cases)) +
     geom_col() +
-    ggtitle(paste("New Cases by Date in ", country, sep = "")) +
-    xlab("Date") + ylab("New Cases")
+    ggtitle(paste("Cumulative Cases by Date in ", country, sep = "")) +
+    xlab("Date") + ylab("Cumulative Cases")
 }
 ```
 
@@ -296,6 +296,14 @@ newCount <- function(country, startDate){
   # Convert the date column to date class
   output$Date <- as.Date(output$Date)
   
+  # Need to sort by province and then date
+  # but only if the selected country lists provinces (or states)
+  if (!all(is.na(output$Province) | output$Province == "")) {
+    output <- output[order(output$Province),]
+  }
+  
+  # needs some work still in order to properly handle countries w/provinces
+  
   # Add columns 
   # for new confirmed
   output$newConfirmed[1] <- 0
@@ -316,6 +324,22 @@ newCount <- function(country, startDate){
   # Delete the first observation
   # It was only returned initially so we could subtract it to get the new numbers that day
   output <- output[-1]
+  
+  # Return the output data frame.
+  return(output)
+}
+```
+
+
+### `getAllCovidData`
+
+Finally, I created a function to get all the COVID-19 data from the API and return a dataframe to the user. This function interacts through the `All Data` endpoint, returning 10MB of data, so should be used infrequently.  
+
+```{r getAllCovidData}
+getAllCovidData <- function(){
+
+  # Get the data from the All Data endpoint.
+  output <- fromJSON("https://api.covid19api.com/all")
   
   # Return the output data frame.
   return(output)
