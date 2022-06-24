@@ -42,6 +42,56 @@ library(stringr)
 
 The COVID-19 API is nice because it does not require users to get a key and authenticate. This makes access a bit simpler than some other APIs. If you want, you can pay for more than just the basic authorization to the API. 
 
+I wrote a function `countryCases` for a user to interact with the `summary` endpoint of the Coronavirus COVID19 API. It returns a data frame with key metrics (cases, deaths, recoveries) for every country. It accepts one argument, `country`, and the default value is "all". The user may enter a country's name or its two character country code to get only data for a specific country.  
+
+
+```{r countryCases function}
+countryCases <- function(country="all"){
+  ###
+  # This function returns a data frame with data on Covid cases. It can also
+  # return those columns for a single country if a country's name or abbreviation is passed.
+  ###
+  
+  # Get the country data from the summaryRoute endpoint.
+  outputAPI <- fromJSON(
+    "https://api.covid19api.com/summary"
+  )
+  
+  # Select only the data.frame from the JSON output.
+  output <- outputAPI$Countries
+  
+  # If country does not equal "all", check if it is an abbrev or country name.
+  if (country != "all"){
+    
+    # If country is in the CountryCode column, subset output for just that row.
+    if (country %in% output$CountryCode){
+      output <- output %>%
+        filter(CountryCode == country)
+    }
+    # If country is in the Country column, subset output for just that row.
+    else if (country %in% output$Country){
+      output <- output %>%
+        filter(Country == country)
+    }
+    # Otherwise, throw an informative error.
+    else {
+      message <- paste("ERROR: Argument for country was not found in either",
+                       "the Country or CountryCode columns. Try ('all') to",
+                       "find the country you're looking for.")
+      stop(message)
+    }
+  }
+  # Do nothing if the country value equals "all".
+  else {
+    
+  }
+  
+ # Return the output data frame.
+  return(output)
+}
+```
+
+
 
 ```{r}
 myData <- httr::GET(url = "https://api.covid19api.com/")
