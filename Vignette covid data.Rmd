@@ -1,5 +1,5 @@
 ---
-title: "Vignette"
+title: "COVID-19 API Vignette"
 output: github_document
 ---
 
@@ -9,38 +9,33 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # My First Vignette  
 
-I am creating this vignette to describe how to read and summarize data from an API. I will use COVID-19 data, because my attempts to work with the Pokemon API were unsuccessful.  
+This document is a vignette to describe how to read and summarize data from an API. I will demonstrate using a [COVID-19 API]{https://covid19api.com/}, because my attempts to work with the Pokemon API were unsuccessful. I will build a couple of functions to interact and explore the data we can retrieve from the API.   
 
-## Required packages
+To use a function that returns data at the country level, the user may either enter the country's name or its two-letter country code in the [ISO 3166]{https://www.iban.com/country-codes} format. 
 
-I used the following packages in the creation of the vignette:  
+## Requirements
+
+I used the following packages in the creation of the vignette, and the user will need them to run the functions and interact with the COVID-19 API:  
+
 - [`httr`]{https://httr.r-lib.org/}: I used this to access the API  
 - [`jsonlite`]{https://cran.r-project.org/web/packages/jsonlite/index.html}: I used this to convert the Pokemon data to a dataframe    
-- [`tidyverse`]{https://www.tidyverse.org/}: I used this set of packages for things like piping  
-- [`dplyr`]{}:  
-- [`stringr`]{}:   
+- [`tidyverse`]{https://www.tidyverse.org/}: I used this set of packages for things like piping and plotting data visualizations  
 
 
 To get started, install and load the packages listed above: 
 
 ```{r Install and Read in Packages, message=FALSE}
-#install.packages("httr")
 library(httr)
-
-#install.packages("jsonlite")
 library(jsonlite)
-
-#install.packages("tidyverse")
 library(tidyverse)
-
-library(dplyr)
-library(stringr)
 ```
 
 
-## Functions to Contact the API
+## Functions to Interact With the API
 
-The COVID-19 API is nice because it does not require users to get a key and authenticate. This makes access a bit simpler than some other APIs. If you want, you can pay for more than just the basic authorization to the API. 
+The COVID-19 API is simple because it does not require users to get a key and authenticate. This makes accessing it less complex than some other APIs. If you want, you can purchase different monthly subscription levels for more than just the basic authorization to the API. The premium subscriptions include more interesting data (population ages, GDP, diabetes rates, handwashing facilities, etc.) and no rate limit.  
+
+### `countryCases`
 
 I wrote a function `countryCases` for a user to interact with the `summary` endpoint of the Coronavirus COVID19 API. It returns a data frame with key metrics (cases, deaths, recoveries) for every country. It accepts one argument, `country`, and the default value is "all". The user may enter a country's name or its two character country code to get only data for a specific country.  
 
@@ -57,7 +52,7 @@ countryCases <- function(country="all"){
     "https://api.covid19api.com/summary"
   )
   
-  # Select only the data.frame from the JSON output.
+  # Select only the Countries data from the JSON output.
   output <- outputAPI$Countries
   
   # If country does not equal "all", check if it is an abbrev or country name.
@@ -91,65 +86,101 @@ countryCases <- function(country="all"){
 }
 ```
 
+### `getSlug`  
 
+I also wrote a helper function, `getSlug`, which finds the "slug", or the version of a country's name formatted for use within a URL. The user inputs a country's name or two-letter abbreviation, and `getSlug` returns the slug. This will help in other functions that interact with the COVID-19 API.  
 
-```{r}
-myData <- httr::GET(url = "https://api.covid19api.com/")
-
-parsed <- fromJSON(rawToChar(myData$content))
-str(parsed, max.level = 1)
-
-```
-I wrote a function where the user inputs a path to a column of data they want, and the function returns the data. 
-
-```{r}
-getColumn <- function(path){
-  base <- "https://api.covid19api.com"
-  data <- httr::GET(url = paste(base,path, sep = ""))
+```{r getSlug function}
+# Function to get the slug for a given country name or abbreviation
+getSlug <- function(country){
   
-  myList <- fromJSON(rawToChar(data$content))
-  return(myList)
+  # Get the country list from the Countries endpoint.
+  output <- fromJSON("https://api.covid19api.com/countries")
+  
+  # If country is in the ISO2 column, subset output for just that row.
+  if (country %in% output$ISO2){
+    output <- output$Slug[output$ISO2 == country]
+  }
+  # If country is in the Country column, subset output for just that row.
+  else if (country %in% output$Country){
+    output <- output$Slug[output$Country == country]
+  }
+  # Otherwise, throw an informative error.
+  else {
+    message <- paste("ERROR: Argument for country was not found in either",
+                     "the Country or CountryCode columns. Try ('all') to",
+                     "find the country you're looking for.")
+    stop(message)
+  }
+  # Return the slug.
+  return(output)
 }
 ```
 
-Then I tested the function. 
-```{r}
-path <- parsed$countriesRoute$Path
-cList <- getColumn(path)
 
-str(cList, max.level = 1)
+### `dailyCases`  
 
-```
-```{r}
-path <- parsed$summaryRoute$Path
-summary <- getColumn(path)
+I wrote a function to allow the user to select a country of interest and receive the daily confirmed case count for that country, as well as the country's location (latitude/longitude). The `dailyCases` function uses the helper function `getSlug` from above to retrieve the information. It returns cumulative confirmed cases starting with the first day a case was confirmed.   
 
-str(summary, max.level = 1)
-```
-I made a program to contact the COVID-19 API and return a dataframe of information for the user to view. 
+```{r dailyCases function}
+dailyCases <- function(country){
+  ###
+  # This function returns a data frame with data on number of confirmed Covid cases on each date in a user-selected country. 
+  ###
+  
+  # find the "slug" based on the country the user selected
+  slug <- getSlug(country)
+  
+  # Get the country data from the Day One Live endpoint.
+  output <- fromJSON(paste(
+    "https://api.covid19api.com/dayone/country/", slug, "/status/confirmed/live", sep = "")
+  )
+  
+  # If country is in the CountryCode column, subset output for just that row.
+  if (country %in% output$CountryCode){
+    output <- output %>%
+      filter(CountryCode == country)
+  }
+  # If country is in the Country column, subset output for just that row.
+  else if (country %in% output$Country){
+    output <- output %>%
+      filter(Country == country)
+  }
+  # Otherwise, throw an informative error.
+  else {
+    message <- paste("ERROR: Argument for country was not found in either",
+                       "the Country or CountryCode columns. Try ('all') to",
+                       "find the country you're looking for.")
+    stop(message)
+  }
 
-```{r}
-countries <- data.frame('Country' = cList$Slug)
-
-vec <- summary$Countries
-
-summ<- vector("list", length(vec))
-
-for (i in 1:195) {
-  summ[[i]] <- data.frame(
-    Country = vec$Slug[i],
-    NewConfirmed = vec$NewConfirmed[i],
-    TotalConfirmed = vec$TotalConfirmed[i],
-    NewDeaths = vec$NewDeaths[i],
-    TotalDeaths = vec$TotalDeaths[i],
-    NewRecovered = vec$NewRecovered[i],
-    TotalRecovered = vec$TotalRecovered[i]
-    )
+  # Return the output data frame.
+  return(output)
 }
-
-summ <- do.call(rbind, summ)
-
 ```
+
+
+### `plotCases`
+
+Next, I wanted to create a function to plot the cases by date, so the user could get a visualization of the type of data they retrieve using my `dailyCases` function. The user inputs a country, and receives a labeled plot of cumulative confirmed cases in that country.  
+
+```{r plotCases}
+
+plotCases <- function(country){
+  
+  data <- dailyCases(country)
+  
+  # Convert date column from character into date class
+  data$Date <- as.Date(data$Date)
+  
+  # Plot the data
+  ggplot(data, aes(x = data$Date, y = data$Cases)) +
+    geom_col() +
+    ggtitle(paste("New Cases by Date in ", country, sep = "")) +
+    xlab("Date") + ylab("New Cases")
+}
+```
+
 
 
 
