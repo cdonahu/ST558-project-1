@@ -88,7 +88,7 @@ countryCases <- function(country="all"){
 
 ### `getSlug`  
 
-I also wrote a helper function, `getSlug`, which finds the "slug", or the version of a country's name formatted for use within a URL. The user inputs a country's name or two-letter abbreviation, and `getSlug` returns the slug. This will help in other functions that interact with the COVID-19 API.  
+I also wrote a helper function, `getSlug`, which finds the "slug", or the version of a country's name formatted for use within a URL. It uses the `Countries` endpoint. The user inputs a country's name or two-letter abbreviation, and `getSlug` returns the slug. This will help in other functions that interact with the COVID-19 API.  
 
 ```{r getSlug function}
 # Function to get the slug for a given country name or abbreviation
@@ -120,7 +120,7 @@ getSlug <- function(country){
 
 ### `dailyCases`  
 
-I wrote a function to allow the user to select a country of interest and receive the daily confirmed case count for that country, as well as the country's location (latitude/longitude). The `dailyCases` function uses the helper function `getSlug` from above to retrieve the information. It returns cumulative confirmed cases starting with the first day a case was confirmed.   
+I wrote a function to allow the user to select a country of interest and receive the daily confirmed case count for that country, as well as the country's location (latitude/longitude). The `dailyCases` function uses the helper function `getSlug` from above to retrieve the information via the `Day One Live` endpoint. It returns cumulative confirmed cases starting with the first day a case was confirmed.   
 
 ```{r dailyCases function}
 dailyCases <- function(country){
@@ -181,24 +181,151 @@ plotCases <- function(country){
 }
 ```
 
+### `casesByDate`
 
+The `casesByDate` function interacts with the `By Country Live` endpoint, using the user's choice of country, start date, and end date. It returns a data frame with daily cumulative confirmed case counts, as well as the country's name, abbreviation, and location. 
 
+```{r}
+# The user inputs a country or 2-letter abbreviation, 
+# and start/end dates in the format YYYY-MM-DD 
 
-– Your function(s) should allow the user to customize their query to return specific data.
-– You do not need to allow the user to query all parts of the API but should allow for at least six modifications or endpoints, etc.
-– The function(s) should be user friendly. That is, it should be easy to specify the options. For example, the ticker types for the financial API has options you can specify such as:
-∗ ADR (American Depository Receipt)
-∗ CEF (Closed-End Fund)
-∗ CS (Common stock)
-The user shouldn’t be required to use the abbreviation and should be able to use the quoted string for use-ability. (You’d want to give the user the option of specifying the abbreviation or the quoted string.
-For the string, you may want to check the string after converting it to all lower-case and then map it to the abbreviation for querying).
-
-```{r Functions to contact Pokemon API}
-
+casesByDate <- function(country, startDate, endDate){
+  
+  ###
+  # This function returns a data frame with data on number of cumulative confirmed Covid cases between selected dates in selected country. 
+  ###
+  
+  # find the "slug" based on the country the user selected
+  slug <- getSlug(country)
+  
+  # Get the country data from the Day One Live endpoint.
+  output <- fromJSON(paste(
+    "https://api.covid19api.com/dayone/country/", slug, "/status/confirmed/live?from=", startDate, "T00:00:00Z&to=", endDate, "T00:00:00Z", sep = "")
+  )
+  
+  # If country is in the CountryCode column, subset output for just that row.
+  if (country %in% output$CountryCode){
+    output <- output %>%
+      filter(CountryCode == country)
+  }
+  # If country is in the Country column, subset output for just that row.
+  else if (country %in% output$Country){
+    output <- output %>%
+      filter(Country == country)
+  }
+  # Otherwise, throw an informative error.
+  else {
+    message <- paste("ERROR: Argument for country was not found in either",
+                     "the Country or CountryCode columns. Try ('all') to",
+                     "find the country you're looking for.")
+    stop(message)
+  }
+  
+  # Return the output data frame.
+  return(output)
+}
 ```
 
 
-## Exploratory Data Analysis  
+### `typesByCountry`
+
+The `typesByCountry` function interacts with the `Live By Country and Status` endpoint. This function returns a data frame with data on number of cumulative confirmed Covid cases, deaths, recoveries, and active cases in the selected country over time.  
+
+
+```{r}
+
+typesByCountry <- function(country){
+  
+  # find the "slug" based on the country the user selected
+  slug <- getSlug(country)
+  
+  # Get the country data from the Day One Live endpoint.
+  output <- fromJSON(paste(
+    "https://api.covid19api.com/dayone/country/", slug, "/status/confirmed", sep = "")
+  )
+  
+  # If country is in the CountryCode column, subset output for just that row.
+  if (country %in% output$CountryCode){
+    output <- output %>%
+      filter(CountryCode == country)
+  }
+  # If country is in the Country column, subset output for just that row.
+  else if (country %in% output$Country){
+    output <- output %>%
+      filter(Country == country)
+  }
+  # Otherwise, throw an informative error.
+  else {
+    message <- paste("ERROR: Argument for country was not found in either",
+                     "the Country or CountryCode columns. Try ('all') to",
+                     "find the country you're looking for.")
+    stop(message)
+  }
+  
+  # Return the output data frame.
+  return(output)
+}
+```
+
+
+`newCount`
+
+After looking through the data while making the functions above, I knew I wanted to calculate the daily number of *new* cases, instead of just looking at cumulative case counts for a country. To get new cases for today, for example one just needs to subtract yesterday's cumulative case count from today's cumulative case count.  
+For the `newCount` function, we interact with the `Live By Country and Status After Date` endpoint. The user enters a country of interest and a start date. 
+The function will output a data frame for that country with the number of new cases of each type (Confirmed, Deaths, Recovered, Active), each day. 
+
+```{r newCount}
+# The user inputs a country's name or 2-letter abbreviation, 
+# and start dates in the format "YYYY-MM-DD" 
+
+newCount <- function(country, startDate){
+
+    # find the "slug" based on the country the user selected
+  slug <- getSlug(country)
+  
+  # save the day before so we can do our subtraction to get New cases
+  # using the cumulative numbers
+  # Had to actually subtract 2 to get data from the day before
+  dayBefore <- as.Date(startDate) -2
+  
+  # Get the country data from the Live By Country And Status After Date endpoint
+  output <- fromJSON(paste(
+    "https://api.covid19api.com/live/country/", slug, "/status/confirmed/date/", dayBefore, "T13:13:30Z", sep = "")
+  )
+
+  # Convert the date column to date class
+  output$Date <- as.Date(output$Date)
+  
+  # Add columns 
+  # for new confirmed
+  output$newConfirmed[1] <- 0
+  output$newConfirmed[2:length(output$Confirmed)] <- diff(output$Confirmed[1:length(output$Confirmed)], lag = 1)
+  
+  # new deaths column
+  output$newDeaths[1] <- 0
+  output$newDeaths[2:length(output$Deaths)] <- diff(output$Deaths[1:length(output$Deaths)], lag = 1)  
+  
+  # new recovered
+  output$newRecovered[1] <- 0
+  output$newRecovered[2:length(output$Recovered)] <- diff(output$Recovered[1:length(output$Recovered)], lag = 1)    
+  
+  # new active cases
+  output$newActive[1] <- 0
+  output$newActive[2:length(output$Active)] <- diff(output$Active[1:length(output$Active)], lag = 1)  
+  
+  # Delete the first observation
+  # It was only returned initially so we could subtract it to get the new numbers that day
+  output <- output[-1]
+  
+  # Return the output data frame.
+  return(output)
+}
+```
+
+
+## Data Exploration    
+
+
 
 - You should pull data from at least two endpoints (possibly combining them into one)  
 - You should create one (or more) relevant new variable that is a function of the variables from a data set you use  
