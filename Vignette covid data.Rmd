@@ -478,6 +478,7 @@ ggplot(vacation, aes(fill=Country, y= newConfirmed, x=Date)) +
 This plot is not as compelling as I had hoped because it appears that Switzerland is only reporting new cases every week or so, and Austria is not doing so on the weekends. These varying reporting timelines mean visualizing the daily data does not necessarily give the whole picture or make for great comparison. 
 Still, from this chart, it does seem that from the beginning of May until the end of June, new case counts are generally increasing in these three summer travel destinations. 
 
+
 # Wrap-Up  
 
 To summarize everything I did in this vignette, I built functions to interact with some of the COVID-19 API’s endpoints, retrieved some of the data, and explored it using tables, numerical summaries, and data visualization. I found some interesting things, like that some island nations had more success keeping COVID cases at bay for longer and keeping the COVID mortality rate low, while people living in poorer or war-torn countries had a harder time with surviving the pandemic.  
@@ -485,7 +486,17 @@ To summarize everything I did in this vignette, I built functions to interact wi
 I hope this vignette helps my readers more successfully interact with APIs. It has been good practice for me.  
 
 
-
+```{r, eval = FALSE, include=FALSE}
+library(rmarkdown)
+rmarkdown::render('./README.Rmd',
+                  output_format = 'github_document',
+                  output_dir = './',
+                  output_options = list(
+                    df_print = 'default',
+                    html_preview = FALSE # to remove .html file creation
+                    )
+                  )
+```
 
 
 
