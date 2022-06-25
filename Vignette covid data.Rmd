@@ -1,25 +1,31 @@
 ---
 title: "COVID-19 API Vignette"
-output: github_document
+author: C. Donahue
+date: June 26, 2022
+output: 
+  github_document:
+    toc: true
+    toc_depth: 2
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# My First Vignette  
 
-This document is a vignette to describe how to read and summarize data from an API. I will demonstrate using a [COVID-19 API]{https://covid19api.com/}, because my attempts to work with the Pokemon API were unsuccessful. I will build a couple of functions to interact and explore the data we can retrieve from the API.   
+This document is a vignette to describe how to read and summarize data from an API. I will demonstrate using a [COVID-19 API](https://covid19api.com/), because my attempts to work with the Pokemon API were unsuccessful. I will build a couple of functions to interact and explore the data we can retrieve from the API.   
 
-To use a function that returns data at the country level, the user may either enter the country's name or its two-letter country code in the [ISO 3166]{https://www.iban.com/country-codes} format. 
+To use a function that returns data at the country level, the user may either enter the country's name or its two-letter country code in the [ISO 3166](https://www.iban.com/country-codes) format. 
 
-## Requirements
+# Requirements
 
 I used the following packages in the creation of the vignette, and the user will need them to run the functions and interact with the COVID-19 API:  
 
-- [`httr`]{https://httr.r-lib.org/}: I used this to access the API  
-- [`jsonlite`]{https://cran.r-project.org/web/packages/jsonlite/index.html}: I used this to convert the Pokemon data to a dataframe    
-- [`tidyverse`]{https://www.tidyverse.org/}: I used this set of packages for things like piping and plotting data visualizations  
+- [`httr`](https://httr.r-lib.org/): I used this to access the API  
+- [`jsonlite`](https://cran.r-project.org/web/packages/jsonlite/index.html): I used this to convert the Pokemon data to a dataframe    
+- [`tidyverse`](https://www.tidyverse.org/): I used this set of packages for things like piping and plotting data visualizations  
+- [`sjmisc`](https://cran.r-project.org/web/packages/sjmisc/index.html): I used this to group a numeric variable into categories to make a histogram  
+- [`countrycode`](https://cran.r-project.org/web/packages/countrycode/countrycode.pdf): I used this to categorize the COVID-19 observations by continent  
 
 
 To get started, install and load the packages listed above: 
@@ -28,14 +34,16 @@ To get started, install and load the packages listed above:
 library(httr)
 library(jsonlite)
 library(tidyverse)
+library(sjmisc)
+library(countrycode)
 ```
 
 
-## Functions to Interact With the API
+# Functions to Interact With the API
 
 The COVID-19 API is simple because it does not require users to get a key and authenticate. This makes accessing it less complex than some other APIs. If you want, you can purchase different monthly subscription levels for more than just the basic authorization to the API. The premium subscriptions include more interesting data (population ages, GDP, diabetes rates, handwashing facilities, etc.) and no rate limit.  
 
-### `countryCases`
+## `countryCases`
 
 I wrote a function `countryCases` for a user to interact with the `summary` endpoint of the Coronavirus COVID19 API. It returns a data frame with key metrics (cases, deaths, recoveries) for every country. It accepts one argument, `country`, and the default value is "all". The user may enter a country's name or its two character country code to get only data for a specific country.  
 
@@ -89,7 +97,7 @@ countryCases <- function(country="all"){
 }
 ```
 
-### `getSlug`  
+## `getSlug`  
 
 I also wrote a helper function, `getSlug`, which finds the "slug", or the version of a country's name formatted for use within a URL. It uses the `Countries` endpoint. The user inputs a country's name or two-letter abbreviation, and `getSlug` returns the slug. This will help in other functions that interact with the COVID-19 API.  
 
@@ -121,7 +129,7 @@ getSlug <- function(country){
 ```
 
 
-### `dailyCases`  
+## `dailyCases`  
 
 I wrote a function to allow the user to select a country of interest and receive the daily confirmed case count for that country, as well as the country's location (latitude/longitude). The `dailyCases` function uses the helper function `getSlug` from above to retrieve the information via the `Day One Live` endpoint. It returns cumulative confirmed cases starting with the first day a case was confirmed.   
 
@@ -142,7 +150,7 @@ dailyCases <- function(country){
 ```
 
 
-### `plotCases`
+## `plotCases`
 
 Next, I wanted to create a function to plot the cases by date, so the user could get a visualization of the type of data they retrieve using my `dailyCases` function. The user inputs a country, and receives a labeled plot of cumulative confirmed cases in that country.  
 
@@ -163,7 +171,7 @@ plotCases <- function(country){
 }
 ```
 
-### `casesByDate`
+## `casesByDate`
 
 The `casesByDate` function interacts with the `By Country Live` endpoint, using the user's choice of country, start date, and end date. It returns a data frame with daily cumulative confirmed case counts, as well as the country's name, abbreviation, and location. 
 
@@ -191,7 +199,7 @@ casesByDate <- function(country, startDate, endDate){
 ```
 
 
-### `typesByCountry`
+## `typesByCountry`
 
 The `typesByCountry` function interacts with the `Live By Country and Status` endpoint. This function returns a data frame with data on number of cumulative confirmed Covid cases, deaths, recoveries, and active cases in the selected country over time.  
 
@@ -214,7 +222,7 @@ typesByCountry <- function(country){
 ```
 
 
-`newCount`
+## `newCount`
 
 After looking through the data while making the functions above, I wanted to calculate the daily number of *new* cases, instead of just looking at cumulative case counts for a country. To get new cases for today, for example one just needs to subtract yesterday's cumulative case count from today's cumulative case count.  
 For the `newCount` function, we interact with the `Live By Country and Status After Date` endpoint. (Some other endpoints do have a count of new cases.) The user parameters include a country of interest and a start date. 
@@ -277,7 +285,7 @@ newCount <- function(country, startDate){
 ```
 
 
-### `getAllCovidData`
+## `getAllCovidData`
 
 Finally, I created a function to get all the COVID-19 data from the API and return a dataframe to the user. This function interacts through the `All Data` endpoint, returning 10MB of data, so should be used infrequently.  
 
@@ -293,7 +301,7 @@ getAllCovidData <- function(){
 ```
 
 
-## Data Exploration    
+# Data Exploration    
 
 First let's pull a summary of the COVID-19 data for all countries by calling `getAllCovidData()`. 
 
@@ -358,12 +366,94 @@ plot1 <- ggplot(covid, aes(TotalConfirmed,
 
 plot1
 ```
+It is tough to see much here, since the outlier in red is skewing the y-axis. I wanted to see which country that was, and also the one skewing the x-axis (to a lesser degree).  
+
 ```{r}
 head(covid[order(covid$TotalConfirmed),], 5)
 tail(covid[order(covid$TotalConfirmed),], 5)
 ```
 
-If we rank the data by number of confirmed cases (cumulative), we can see that one issue is that North Korea only had one confirmed case, but somehow had six deaths. And the outlier with the incredibly high case count? That's the United States, with almost 87 million as of late June 2022. 
+If we rank the data by number of confirmed cases (cumulative), we can see that the outlier in red on the scatter plot is there because North Korea only had one confirmed case, but somehow had six deaths. And the outlier with the incredibly high case count? That's the United States, with almost 87 million as of late June 2022. I plotted the same thing once more, but left out North Korea.  
+
+```{r}
+# Create a scatter plot of win pct vs. shots per game.
+ggplot(covid[covid$Country != "Korea (North)",], aes(TotalConfirmed,
+                                   FatalityRate,
+                                   color=FatalityRate)) + 
+  # Add a scatter plot layer and adjust the size and opaqueness of points.
+  geom_point(size=4, alpha=0.75) + 
+  # Add a color gradient for FatalityRate
+  scale_color_gradient(low="blue", high="red") + 
+  # Remove the legend because it takes up space.
+  theme(legend.position="none") + 
+  # Add a black regression line.
+  geom_smooth(method=lm, formula=y~x, color="black") + 
+  # Add labels to the axes.
+  scale_x_continuous("Cumulative Confirmed Cases") + 
+  scale_y_continuous("Fatality Rate") + 
+  # Add a title.
+  ggtitle("Fatality Rate vs. Cumulative Confirmed Cases of COVID-19")
+```
+
+Now the scatter plot looks more reasonable, and it's easy to see the legitimate outliers (Yemen for Fatality Rate and USA for Cases). And more generally, that countries with higher case counts tend to have not-so-high fatality rates. 
+
+I wanted to see how the fatality rate data was shaped or distributed, and whether it was gather around a certain rate, or close to zero. I plotted FatalityRate in a histogram to get an idea. For this, I dropped the North Korea observation, which did not seem to be documented the same way other countries were and was an extreme outlier, causing problems in my visualization.   
+
+
+```{r Histogram}
+
+ggplot(covid[covid$Country != "Korea (North)",], aes(x=FatalityRate)) +
+  geom_histogram(color = "orange", fill = "pink") +
+  ggtitle("Histogram of Countries by Fatality Rate") +
+  ylab("Count of Countries") +
+  xlab("Deaths per Confirmed Case")
+```
+
+
+Then I decided to bring in the package `countrycode` so that I could categorize the observations by continent. 
+
+```{r}
+library(countrycode)
+
+covid$Continent <- countrycode::countrycode(sourcevar = covid[,"Country"],
+                                            origin = "country.name",
+                                            destination = "continent")
+covid$Continent[covid$Country == "Antarctica"] <- "Antarctica"
+covid$Continent[covid$Country == "Republic of Kosovo"] <- "Europe" 
+```
+Antarctica and Kosovo were the only two observations I had to manually set a continent for. I looked at a contingency table of the new column using `table(covid$Continent) to see how many observations each continent had. 
+
+```{r}
+table(covid$Continent)
+```
+
+
+Once I had the continents set, I looked at how COVID-19 fatality rates compared across continents. I looked at means and medians for the total number of deaths, cases (cumulative), and new cases grouped by continent. 
+
+```{r}
+covid %>%
+  group_by(Continent) %>%
+  summarise(n = n(),
+            meanDeaths = mean(TotalDeaths),
+            medianDeaths = median(TotalDeaths),
+            meanCases = mean(TotalConfirmed),
+            medianCases = median(TotalConfirmed),
+            meanNewCases = mean(NewConfirmed),
+            medianNewCases = median(NewConfirmed))
+```
+Excluding Antarctica and Oceania due to the small numbers of countries in each continent, these summaries show that countries in Europe generally have more (reported) COVID-19 deaths than countries in Africa, the Americas, and Asia. I thought that was a little surprising. 
+
+Then I looked at the Fatality Rate compared across continents, using a box and whiskers plot. I again dropped the North Korea observation for this plot. 
+
+
+```{r Boxplot}
+ggplot(covid[covid$Country != "Korea (North)",], aes(Continent, FatalityRate)) +
+  geom_boxplot(color = "blue", outlier.color = "red") +
+  ggtitle("Boxplot of COVID-19 Fatality Rate by Continent") +
+  ylab("Deaths per Confirmed Case")
+```
+
+The boxplot was interesting, and could probably be moreso if I had split the "Americas" continent category up by North and South America. You can see that the fatality rates in Oceania are significantly lower than those in Africa and the Americas, because the boxes to not overlap vertically. But I also noticed that the fatality rate for Europe was lower than Africa and the Americas. So  the higher death toll in Europe noted in the summary above could be due to the higher case count there, not because the disease was more deadly. 
 
 A lot of American tourists are starting to travel overseas this summer after taking a couple years off. Let's look at data for some common destinations. I will use `newCount()` to get data sets for Austria, Switzerland, and Greece from the beginning of May 2022.  
 
@@ -385,19 +475,19 @@ ggplot(vacation, aes(fill=Country, y= newConfirmed, x=Date)) +
 
 ```
 
+This plot is not as compelling as I had hoped because it appears that Switzerland is only reporting new cases every week or so, and Austria is not doing so on the weekends. These varying reporting timelines mean visualizing the daily data does not necessarily give the whole picture or make for great comparison. 
+Still, from this chart, it does seem that from the beginning of May until the end of June, new case counts are generally increasing in these three summer travel destinations. 
+
+# Wrap-Up  
+
+To summarize everything I did in this vignette, I built functions to interact with some of the COVID-19 API’s endpoints, retrieved some of the data, and explored it using tables, numerical summaries, and data visualization. I found some interesting things, like that some island nations had more success keeping COVID cases at bay for longer and keeping the COVID mortality rate low, while people living in poorer or war-torn countries had a harder time with surviving the pandemic.  
+
+I hope this vignette helps my readers more successfully interact with APIs. It has been good practice for me.  
 
 
 
 
 
-
-
-- You should pull data from at least two endpoints (possibly combining them into one)  
-- You should create one (or more) relevant new variable that is a function of the variables from a data set you use  
-- You should create some contingency tables  
-- You should create numerical summaries for some quantitative variables at each setting of some of your categorical variables  
-- You should create at least five plots utilizing coloring, grouping, etc. All plots should have nice labels and titles.  
-- You should have at least one bar plot, one histogram, one box plot, and one scatter plot  
 
 
 
