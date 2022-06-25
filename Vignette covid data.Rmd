@@ -80,6 +80,9 @@ countryCases <- function(country="all"){
   else {
     
   }
+
+  # convert the Date to a Date class
+  output$Date <- as.Date(output$Date)
   
  # Return the output data frame.
   return(output)
@@ -124,9 +127,6 @@ I wrote a function to allow the user to select a country of interest and receive
 
 ```{r dailyCases function}
 dailyCases <- function(country){
-  ###
-  # This function returns a data frame with data on number of confirmed Covid cases on each date in a user-selected country. 
-  ###
   
   # find the "slug" based on the country the user selected
   slug <- getSlug(country)
@@ -136,24 +136,6 @@ dailyCases <- function(country){
     "https://api.covid19api.com/dayone/country/", slug, "/status/confirmed/live", sep = "")
   )
   
-  # If country is in the CountryCode column, subset output for just that row.
-  if (country %in% output$CountryCode){
-    output <- output %>%
-      filter(CountryCode == country)
-  }
-  # If country is in the Country column, subset output for just that row.
-  else if (country %in% output$Country){
-    output <- output %>%
-      filter(Country == country)
-  }
-  # Otherwise, throw an informative error.
-  else {
-    message <- paste("ERROR: Argument for country was not found in either",
-                       "the Country or CountryCode columns. Try ('all') to",
-                       "find the country you're looking for.")
-    stop(message)
-  }
-
   # Return the output data frame.
   return(output)
 }
@@ -203,24 +185,6 @@ casesByDate <- function(country, startDate, endDate){
     "https://api.covid19api.com/dayone/country/", slug, "/status/confirmed/live?from=", startDate, "T00:00:00Z&to=", endDate, "T00:00:00Z", sep = "")
   )
   
-  # If country is in the CountryCode column, subset output for just that row.
-  if (country %in% output$CountryCode){
-    output <- output %>%
-      filter(CountryCode == country)
-  }
-  # If country is in the Country column, subset output for just that row.
-  else if (country %in% output$Country){
-    output <- output %>%
-      filter(Country == country)
-  }
-  # Otherwise, throw an informative error.
-  else {
-    message <- paste("ERROR: Argument for country was not found in either",
-                     "the Country or CountryCode columns. Try ('all') to",
-                     "find the country you're looking for.")
-    stop(message)
-  }
-  
   # Return the output data frame.
   return(output)
 }
@@ -244,24 +208,6 @@ typesByCountry <- function(country){
     "https://api.covid19api.com/dayone/country/", slug, "/status/confirmed", sep = "")
   )
   
-  # If country is in the CountryCode column, subset output for just that row.
-  if (country %in% output$CountryCode){
-    output <- output %>%
-      filter(CountryCode == country)
-  }
-  # If country is in the Country column, subset output for just that row.
-  else if (country %in% output$Country){
-    output <- output %>%
-      filter(Country == country)
-  }
-  # Otherwise, throw an informative error.
-  else {
-    message <- paste("ERROR: Argument for country was not found in either",
-                     "the Country or CountryCode columns. Try ('all') to",
-                     "find the country you're looking for.")
-    stop(message)
-  }
-  
   # Return the output data frame.
   return(output)
 }
@@ -270,8 +216,8 @@ typesByCountry <- function(country){
 
 `newCount`
 
-After looking through the data while making the functions above, I knew I wanted to calculate the daily number of *new* cases, instead of just looking at cumulative case counts for a country. To get new cases for today, for example one just needs to subtract yesterday's cumulative case count from today's cumulative case count.  
-For the `newCount` function, we interact with the `Live By Country and Status After Date` endpoint. The user enters a country of interest and a start date. 
+After looking through the data while making the functions above, I wanted to calculate the daily number of *new* cases, instead of just looking at cumulative case counts for a country. To get new cases for today, for example one just needs to subtract yesterday's cumulative case count from today's cumulative case count.  
+For the `newCount` function, we interact with the `Live By Country and Status After Date` endpoint. (Some other endpoints do have a count of new cases.) The user parameters include a country of interest and a start date. 
 The function will output a data frame for that country with the number of new cases of each type (Confirmed, Deaths, Recovered, Active), each day. 
 
 ```{r newCount}
@@ -348,6 +294,101 @@ getAllCovidData <- function(){
 
 
 ## Data Exploration    
+
+First let's pull a summary of the COVID-19 data for all countries by calling `getAllCovidData()`. 
+
+```{r}
+covid <- countryCases()
+```
+
+
+One of the most concerning aspects of COVID-19 is how deadly it is, so I wanted to look at the number of deaths as a percentage of confirmed cases. This variable does not exist, so I need to calculate it. I divided the total number of deaths for each country by the total number of confirmed cases. 
+
+```{r}
+# Add a column for the fatality rate. 
+covid <- covid %>%
+  mutate(FatalityRate = TotalDeaths / TotalConfirmed)
+
+```
+
+I would hypothesize that wealthier countries have a lower fatality rate because of access to better medical care and safer living conditions in general. Since this dataset does not give me any measure of a country's wealth (without a paid subscription), I will just look at a ranking of the best and worst fatality rates to see if I notice anything.  
+
+```{r}
+head(covid[order(covid$FatalityRate),], 25)
+```
+
+What stands out, interestingly, is that a lot of these countries in the top 25 (lowest) fatality rate list are island nations. 
+
+```{r}
+tail(covid[order(covid$FatalityRate),], 25)
+```
+
+The worst fatality rates, meanwhile, seem to include not just generally poorer countries, but many that are also war-torn.  
+
+Next, I want to create some charts. I will start with the simple `plotCases` function to see what looks interesting. I'm going to choose Australia, as it's a developed country but also an island, and then Canada. 
+
+```{r}
+plotCases("Australia")
+plotCases("Canada")
+```
+
+Looks like Australia had a lot less gradual increase in case counts, at least compared to Canada. Although both have a large climb right around the beginning of 2022. It is important to note that the scale of the y-axis is not consistent here, so we are really just comparing shape and not scale. 
+
+Below I plotted the fatality rate against the total cumulative count of confirmed COVID-19 cases. I added a regression line as well. What really stands out, however, is that there is an outlier (North Korea, in fact) with an incredibly high fatality rate (and another with a really high case count, but not on the same scale). 
+
+
+```{r}
+# Create a scatter plot of win pct vs. shots per game.
+plot1 <- ggplot(covid, aes(TotalConfirmed,
+                                   FatalityRate,
+                                   color=FatalityRate)) + 
+  # Add a scatter plot layer and adjust the size and opaqueness of points.
+  geom_point(size=4, alpha=0.75) + 
+  # Add a color gradient for FatalityRate
+  scale_color_gradient(low="blue", high="red") + 
+  # Remove the legend because it takes up space.
+  theme(legend.position="none") + 
+  # Add a black regression line.
+  geom_smooth(method=lm, formula=y~x, color="black") + 
+  # Add labels to the axes.
+  scale_x_continuous("Cumulative Confirmed Cases") + 
+  scale_y_continuous("Fatality Rate") + 
+  # Add a title.
+  ggtitle("Fatality Rate vs. Cumulative Confirmed Cases of COVID-19")
+
+plot1
+```
+```{r}
+head(covid[order(covid$TotalConfirmed),], 5)
+tail(covid[order(covid$TotalConfirmed),], 5)
+```
+
+If we rank the data by number of confirmed cases (cumulative), we can see that one issue is that North Korea only had one confirmed case, but somehow had six deaths. And the outlier with the incredibly high case count? That's the United States, with almost 87 million as of late June 2022. 
+
+A lot of American tourists are starting to travel overseas this summer after taking a couple years off. Let's look at data for some common destinations. I will use `newCount()` to get data sets for Austria, Switzerland, and Greece from the beginning of May 2022.  
+
+```{r}
+austria <- newCount("Austria", "2022-05-01")
+switzerland <- newCount("Switzerland", "2022-05-01")
+greece <- newCount("Greece", "2022-05-01")
+```
+
+Let's plot the daily count of new cases for these countries. First, I am going to join the data sets by the date column, though. 
+
+```{r}
+vacation <- rbind(austria, switzerland, greece)
+
+ggplot(vacation, aes(fill=Country, y= newConfirmed, x=Date)) +
+  geom_bar(position = "dodge", stat = "identity") +
+  ggtitle("Summer 2022 New COVID-19 Cases by Country") +
+  ylab("New Cases")
+
+```
+
+
+
+
+
 
 
 
