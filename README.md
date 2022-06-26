@@ -377,31 +377,31 @@ head(covid[order(covid$FatalityRate),], 25)
 ```
 
     ##                                       ID                         Country
-    ## 6   646ec970-8bab-4812-97f2-f6ff0af52c67                      Antarctica
-    ## 74  1790f2b7-3579-44fa-bf6e-b63fd63b7657   Holy See (Vatican City State)
-    ## 111 b4266b34-7cd6-4df9-bc89-7d21b29af81e                Marshall Islands
-    ## 115 a89fab86-b42b-4893-8fd2-5fc2025de216 Micronesia, Federated States of
-    ## 21  b0fab17f-9798-4cb5-9a52-d757de551e53                          Bhutan
-    ## 77  68dc1984-2b18-49ee-9d9f-cb6a2910e117                         Iceland
-    ## 29  f417e6ee-e552-49c5-a9d8-c3136b4dcbfe                         Burundi
-    ## 179 1696707c-dd6b-4a1f-8e4b-25731afd3079                           Tonga
-    ## 158 1737509f-c00a-46ff-a8cd-f0dfca6880af                       Singapore
-    ## 126 efe994ba-e8dc-43fa-8372-5964b29790ea                     New Zealand
-    ## 133 efd18531-8e24-4a51-bee8-98ba42c30036                           Palau
-    ## 10  c0903c2f-e90f-488f-929d-1ed4bdb0bf53                       Australia
-    ## 190 062221fc-fdf8-4093-95aa-1e9e04ce831d                         Vanuatu
-    ## 92  6a3c4c55-8984-4744-9ab3-0b4327c3adba                   Korea (South)
-    ## 26  1f6cadbc-1cce-472b-a57e-11b75f44b0c6               Brunei Darussalam
-    ## 108 b43735e2-c165-411f-a7af-910aaddc4944                        Maldives
-    ## 173 78fac0b4-f86e-4109-a3f3-21231e8938e2       Taiwan, Republic of China
-    ## 142 6986e816-d032-48d9-abab-e04350bc0af8                           Qatar
-    ## 150 6fccb57b-02e8-4fc1-9363-0aecf84e97ac                           Samoa
-    ## 48  bbf04e14-f1c6-43e5-bd51-a67ed5699a32                         Denmark
-    ## 45  98109b14-3222-4d2d-86ac-d9695f7884a1                          Cyprus
-    ## 130 b64e5f00-167d-4bb4-85dc-4e3fd32956f5                          Norway
-    ## 118 a6d12e19-b1e1-4a57-89f8-c705dbc8e192                        Mongolia
-    ## 14  abe89703-21f5-4f22-9f10-fb499c6dc22c                         Bahrain
-    ## 185 44c6277b-e934-411e-8610-e58fd9c7f130            United Arab Emirates
+    ## 6   8b6ab99a-e614-4e58-8eaa-63c64459247f                      Antarctica
+    ## 74  47110b35-204f-49b0-964c-862f6f66ae34   Holy See (Vatican City State)
+    ## 111 aac1a54b-6b0a-49a4-96c7-5d87ef97bb43                Marshall Islands
+    ## 115 678488ab-8555-478e-b73b-6825d7f4e79e Micronesia, Federated States of
+    ## 21  f4feba31-e52d-41a8-b5ae-06da6f03b6e0                          Bhutan
+    ## 77  7e34f8a9-4699-45be-9c1e-9d38048c8f25                         Iceland
+    ## 29  1c7d93ad-aced-42f7-9967-f97c01385617                         Burundi
+    ## 179 a5d30d2b-34b2-4eb4-b966-40200b3a9ec1                           Tonga
+    ## 158 41777e91-4ec6-41bc-8d33-6f22a036d539                       Singapore
+    ## 126 c823dc40-025d-473e-bd94-a26ffa9c8535                     New Zealand
+    ## 133 d032a660-418a-4a18-9001-d12f37880b79                           Palau
+    ## 10  1646a507-c638-4526-9a25-a6a762c094d9                       Australia
+    ## 190 542f759f-85ae-4c14-aaf4-e88e34659a3d                         Vanuatu
+    ## 92  c872e581-bee3-4e8c-8830-b3e7c12d4543                   Korea (South)
+    ## 26  cb124a1f-1616-4948-a97e-41febbd693f8               Brunei Darussalam
+    ## 108 053b1282-6134-412d-9509-18b4bc8690a4                        Maldives
+    ## 173 219e619f-f814-4802-bf0b-25309494484e       Taiwan, Republic of China
+    ## 142 5ac621d9-283b-4f95-ab7c-46087454d8cd                           Qatar
+    ## 150 a172adfd-c8e5-4afe-b0f9-3459ff81bc5f                           Samoa
+    ## 48  698c1444-8a72-4176-a817-5f3bfb889e36                         Denmark
+    ## 45  fb4f6bc9-0e9d-4f10-bfdd-1edd16b580ff                          Cyprus
+    ## 130 04288e76-1899-4102-8c4d-1252f9c2c146                          Norway
+    ## 118 b56f291e-6c19-47e2-a120-d9f2e6c5ed45                        Mongolia
+    ## 14  192949f4-bd64-468d-9bec-741c7e48c5f2                         Bahrain
+    ## 185 c3e50e5d-3270-4609-8cf4-5cf9c2ab12cd            United Arab Emirates
     ##     CountryCode                        Slug NewConfirmed TotalConfirmed
     ## 6            AQ                  antarctica            0             11
     ## 74           VA holy-see-vatican-city-state            0             29
@@ -463,31 +463,31 @@ tail(covid[order(covid$FatalityRate),], 25)
 ```
 
     ##                                       ID                      Country
-    ## 75  95495490-47f9-4c39-afd5-e582c230b6f7                     Honduras
-    ## 79  f0bf7d7c-2fc3-4e22-82b2-50f4247e03d3                    Indonesia
-    ## 3   3454fadd-0e90-4511-81d3-ed16eedf34b8                      Algeria
-    ## 35  8f38c7ec-ec6b-4d2a-84fe-08491fe0f620                         Chad
-    ## 73  84924446-b172-4c07-ad91-69f71c8a695a                        Haiti
-    ## 181 f3d07864-0f28-47dc-b936-400c09f336d7                      Tunisia
-    ## 137 68cd6ff0-ace3-43db-9f77-61beab5e8a4d                     Paraguay
-    ## 104 65433199-26df-4963-b099-f562fdf5976c       Macedonia, Republic of
-    ## 63  cdfefb3b-f6e4-44c2-a5cc-999c445ce184                       Gambia
-    ## 106 4ae19970-addb-451e-939f-45495c6c8212                       Malawi
-    ## 122 d2bbba15-a12e-48e3-8f97-98aee3159e4e                      Myanmar
-    ## 27  40e75d62-ea19-4e51-8a94-985e0bf4128b                     Bulgaria
-    ## 128 9562d4a2-df71-4cfc-a49b-b518a4c5f71f                        Niger
-    ## 99  796faef2-dc88-461e-8cd8-521155847c27                      Liberia
-    ## 52  6f491327-1483-441a-a3a6-9611395998e0                      Ecuador
-    ## 23  a59f17d1-211c-41d7-b656-8166e48506be       Bosnia and Herzegovina
-    ## 1   fe439931-1d7f-4415-8544-775c5fb1057c                  Afghanistan
-    ## 53  de607d41-5d1d-49f1-bdc9-a397dfa01f28                        Egypt
-    ## 162 b8fb24ac-3b48-4c14-aa32-824f61689b8e                      Somalia
-    ## 114 5253d61e-5c00-492a-9bb3-3fb9a82ab7a9                       Mexico
-    ## 172 baad1677-4f31-49f9-875b-f1e7409c47c8 Syrian Arab Republic (Syria)
-    ## 138 33da3075-9679-4cc8-859e-291426bda577                         Peru
-    ## 167 e001aeee-0ce0-4451-8659-78594eaa1235                        Sudan
-    ## 193 50db70dd-4bed-485e-8f2f-0ca52b704abe                        Yemen
-    ## 91  12891229-5b09-42bd-850f-db39d5af2a2b                Korea (North)
+    ## 75  79efdb4e-5ebb-48ae-84fe-b85596681e99                     Honduras
+    ## 79  8b989979-8d4b-4623-b1cc-c51edbc09193                    Indonesia
+    ## 3   22b54635-374d-48ed-83f8-b1cb4d9f4d6f                      Algeria
+    ## 35  3a1b4e16-dfa6-46b9-9734-cc1fac69d280                         Chad
+    ## 73  dd27fff0-c20f-4f1d-bf75-7c8aae598aac                        Haiti
+    ## 181 830dc2f5-b97f-439e-a330-431029cf7a37                      Tunisia
+    ## 137 40c3e5f7-509c-49da-82f9-72394dafb269                     Paraguay
+    ## 104 9089b3bf-10be-480f-9607-52e31bc29a76       Macedonia, Republic of
+    ## 63  dcd14f0c-add3-4479-bacf-93266f17ca81                       Gambia
+    ## 106 df32a8d1-3404-4884-b3e5-11972dc562af                       Malawi
+    ## 122 6d9b26e6-2919-471e-827c-799ba2760d0a                      Myanmar
+    ## 27  82632e10-9862-41a8-bda8-8b84e6601e53                     Bulgaria
+    ## 128 2c3e44b9-161f-4369-b27e-c3a5d3b9e21c                        Niger
+    ## 99  f7529cd5-6043-4dc3-a53b-26c0f0151640                      Liberia
+    ## 52  54af5b14-4e1c-4a1f-9307-b60e30736cac                      Ecuador
+    ## 23  fe0d0627-e0b1-423a-b141-e7e83d68f9e3       Bosnia and Herzegovina
+    ## 1   a682cc75-a85d-4df5-9352-769ce863179f                  Afghanistan
+    ## 53  78171cb8-5444-40e9-a62b-e47f49d56ed4                        Egypt
+    ## 162 16d5013d-013e-474a-947a-bdabcae970c0                      Somalia
+    ## 114 76c5f10e-3947-4f1f-b85c-38a835b62997                       Mexico
+    ## 172 1a9c51ca-00d4-479d-9c8f-5ff07819fd56 Syrian Arab Republic (Syria)
+    ## 138 3e4f0ed1-6984-4e16-9d44-e47d64077830                         Peru
+    ## 167 b821c9cf-ae75-46ce-95ad-079793fd1eaa                        Sudan
+    ## 193 80188572-1146-4891-9437-62b49f6295dc                        Yemen
+    ## 91  0a101f00-c4fd-4c46-8355-b49c3c87fa7e                Korea (North)
     ##     CountryCode                   Slug NewConfirmed TotalConfirmed NewDeaths
     ## 75           HN               honduras            0         426490         0
     ## 79           ID              indonesia            0        6078725         0
@@ -604,11 +604,11 @@ head(covid[order(covid$TotalConfirmed),], 5)
 ```
 
     ##                                       ID                         Country
-    ## 91  12891229-5b09-42bd-850f-db39d5af2a2b                   Korea (North)
-    ## 6   646ec970-8bab-4812-97f2-f6ff0af52c67                      Antarctica
-    ## 111 b4266b34-7cd6-4df9-bc89-7d21b29af81e                Marshall Islands
-    ## 74  1790f2b7-3579-44fa-bf6e-b63fd63b7657   Holy See (Vatican City State)
-    ## 115 a89fab86-b42b-4893-8fd2-5fc2025de216 Micronesia, Federated States of
+    ## 91  0a101f00-c4fd-4c46-8355-b49c3c87fa7e                   Korea (North)
+    ## 6   8b6ab99a-e614-4e58-8eaa-63c64459247f                      Antarctica
+    ## 111 aac1a54b-6b0a-49a4-96c7-5d87ef97bb43                Marshall Islands
+    ## 74  47110b35-204f-49b0-964c-862f6f66ae34   Holy See (Vatican City State)
+    ## 115 678488ab-8555-478e-b73b-6825d7f4e79e Micronesia, Federated States of
     ##     CountryCode                        Slug NewConfirmed TotalConfirmed
     ## 91           KP                 korea-north            0              1
     ## 6            AQ                  antarctica            0             11
@@ -627,11 +627,11 @@ tail(covid[order(covid$TotalConfirmed),], 5)
 ```
 
     ##                                       ID                  Country CountryCode
-    ## 65  b8b4ff74-d213-4070-8dbf-bfedc12cf278                  Germany          DE
-    ## 61  35ba7b8c-cf52-4bd0-bc8e-d2afb3eb072e                   France          FR
-    ## 25  cce2870a-119e-49c1-802d-eb1cfc54adec                   Brazil          BR
-    ## 78  f28b00b6-b2e9-4103-9dc9-726047c17f11                    India          IN
-    ## 187 543a7052-c492-4c6b-a4e8-3e52fcdc2334 United States of America          US
+    ## 65  c000439b-1059-4475-bb0d-3b2e8584c556                  Germany          DE
+    ## 61  784c8225-6aae-41ca-8a31-e34a818f44d0                   France          FR
+    ## 25  2a6425df-5814-4531-927e-1f361c6ea046                   Brazil          BR
+    ## 78  31fe6b9b-2877-4cdb-9155-3f035e4c588d                    India          IN
+    ## 187 925a42ba-7a86-462f-9116-34b25825b8c8 United States of America          US
     ##              Slug NewConfirmed TotalConfirmed NewDeaths TotalDeaths NewRecovered
     ## 65        germany            1       27771112         0      140734            0
     ## 61         france            0       30714200         0      150356            0
