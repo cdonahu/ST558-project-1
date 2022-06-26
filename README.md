@@ -553,13 +553,13 @@ Canada.
 plotCases("Australia")
 ```
 
-![](/../README_files/figure-gfm/plotCases%20Aus%20and%20Canada-1.png)<!-- -->
+![](/./README_files/figure-gfm/plotCases%20Aus%20and%20Canada-1.png)<!-- -->
 
 ``` r
 plotCases("Canada")
 ```
 
-![](../README_files/figure-gfm/plotCases%20Aus%20and%20Canada-2.png)<!-- -->
+![](./README_files/figure-gfm/plotCases%20Aus%20and%20Canada-2.png)<!-- -->
 
 Looks like Australia had a lot less gradual increase in case counts, at
 least compared to Canada. Although both have a large climb right around
@@ -594,7 +594,7 @@ plot1 <- ggplot(covid, aes(TotalConfirmed,
 plot1
 ```
 
-![](../README_files/figure-gfm/Scatter%20plot-1.png)<!-- -->
+![](./README_files/figure-gfm/Scatter%20plot-1.png)<!-- -->
 It is tough to see much here, since the outlier in red is skewing the
 y-axis. I wanted to see which country that was, and also the one skewing
 the x-axis (to a lesser degree).
@@ -671,7 +671,7 @@ ggplot(covid[covid$Country != "Korea (North)",], aes(TotalConfirmed,
   ggtitle("Fatality Rate vs. Cumulative Confirmed Cases of COVID-19")
 ```
 
-![](../README_files/figure-gfm/scatter%20plot%20no%20nK-1.png)<!-- -->
+![](./README_files/figure-gfm/scatter%20plot%20no%20nK-1.png)<!-- -->
 
 Now the scatter plot looks more reasonable, and it’s easy to see the
 legitimate outliers (Yemen for Fatality Rate and USA for Cases). And
@@ -695,7 +695,7 @@ ggplot(covid[covid$Country != "Korea (North)",], aes(x=FatalityRate)) +
 
     ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 
-![](../README_files/figure-gfm/Histogram-1.png)<!-- -->
+![](./README_files/figure-gfm/Histogram-1.png)<!-- -->
 
 Then I decided to bring in the package `countrycode` so that I could
 categorize the observations by continent.
@@ -772,7 +772,7 @@ ggplot(covid[covid$Country != "Korea (North)",], aes(Continent, FatalityRate)) +
   ylab("Deaths per Confirmed Case")
 ```
 
-![](../README_files/figure-gfm/Boxplot-1.png)<!-- -->
+![](./README_files/figure-gfm/Boxplot-1.png)<!-- -->
 
 The boxplot was interesting, and could probably be moreso if I had split
 the “Americas” continent category up by North and South America. You can
@@ -806,7 +806,7 @@ ggplot(vacation, aes(fill=Country, y= newConfirmed, x=Date)) +
   ylab("New Cases")
 ```
 
-![](../README_files/figure-gfm/bar%20chart-1.png)<!-- -->
+![](./README_files/figure-gfm/bar%20chart-1.png)<!-- -->
 
 This plot is not as compelling as I had hoped because it appears that
 Switzerland is only reporting new cases every week or so, and Austria is
