@@ -312,7 +312,7 @@ covid <- countryCases()
 
 One of the most concerning aspects of COVID-19 is how deadly it is, so I wanted to look at the number of deaths as a percentage of confirmed cases. This variable does not exist, so I need to calculate it. I divided the total number of deaths for each country by the total number of confirmed cases. 
 
-```{r}
+```{r add Fatality Rate variable}
 # Add a column for the fatality rate. 
 covid <- covid %>%
   mutate(FatalityRate = TotalDeaths / TotalConfirmed)
@@ -321,13 +321,13 @@ covid <- covid %>%
 
 I would hypothesize that wealthier countries have a lower fatality rate because of access to better medical care and safer living conditions in general. Since this dataset does not give me any measure of a country's wealth (without a paid subscription), I will just look at a ranking of the best and worst fatality rates to see if I notice anything.  
 
-```{r}
+```{r print head Fatality Rate}
 head(covid[order(covid$FatalityRate),], 25)
 ```
 
 What stands out, interestingly, is that a lot of these countries in the top 25 (lowest) fatality rate list are island nations. 
 
-```{r}
+```{r print tail Fatality Rate}
 tail(covid[order(covid$FatalityRate),], 25)
 ```
 
@@ -335,7 +335,7 @@ The worst fatality rates, meanwhile, seem to include not just generally poorer c
 
 Next, I want to create some charts. I will start with the simple `plotCases` function to see what looks interesting. I'm going to choose Australia, as it's a developed country but also an island, and then Canada. 
 
-```{r}
+```{r plotCases Aus and Canada}
 plotCases("Australia")
 plotCases("Canada")
 ```
@@ -345,8 +345,7 @@ Looks like Australia had a lot less gradual increase in case counts, at least co
 Below I plotted the fatality rate against the total cumulative count of confirmed COVID-19 cases. I added a regression line as well. What really stands out, however, is that there is an outlier (North Korea, in fact) with an incredibly high fatality rate (and another with a really high case count, but not on the same scale). 
 
 
-```{r}
-# Create a scatter plot of win pct vs. shots per game.
+```{r Scatter plot}
 plot1 <- ggplot(covid, aes(TotalConfirmed,
                                    FatalityRate,
                                    color=FatalityRate)) + 
@@ -368,15 +367,14 @@ plot1
 ```
 It is tough to see much here, since the outlier in red is skewing the y-axis. I wanted to see which country that was, and also the one skewing the x-axis (to a lesser degree).  
 
-```{r}
+```{r head and tail of total confirmed}
 head(covid[order(covid$TotalConfirmed),], 5)
 tail(covid[order(covid$TotalConfirmed),], 5)
 ```
 
 If we rank the data by number of confirmed cases (cumulative), we can see that the outlier in red on the scatter plot is there because North Korea only had one confirmed case, but somehow had six deaths. And the outlier with the incredibly high case count? That's the United States, with almost 87 million as of late June 2022. I plotted the same thing once more, but left out North Korea.  
 
-```{r}
-# Create a scatter plot of win pct vs. shots per game.
+```{r scatter plot no nK}
 ggplot(covid[covid$Country != "Korea (North)",], aes(TotalConfirmed,
                                    FatalityRate,
                                    color=FatalityRate)) + 
@@ -412,7 +410,7 @@ ggplot(covid[covid$Country != "Korea (North)",], aes(x=FatalityRate)) +
 
 Then I decided to bring in the package `countrycode` so that I could categorize the observations by continent. 
 
-```{r}
+```{r add Continent column}
 library(countrycode)
 
 covid$Continent <- countrycode::countrycode(sourcevar = covid[,"Country"],
@@ -423,14 +421,14 @@ covid$Continent[covid$Country == "Republic of Kosovo"] <- "Europe"
 ```
 Antarctica and Kosovo were the only two observations I had to manually set a continent for. I looked at a contingency table of the new column using `table(covid$Continent) to see how many observations each continent had. 
 
-```{r}
+```{r contingency table}
 table(covid$Continent)
 ```
 
 
 Once I had the continents set, I looked at how COVID-19 fatality rates compared across continents. I looked at means and medians for the total number of deaths, cases (cumulative), and new cases grouped by continent. 
 
-```{r}
+```{r summary}
 covid %>%
   group_by(Continent) %>%
   summarise(n = n(),
@@ -457,7 +455,7 @@ The boxplot was interesting, and could probably be moreso if I had split the "Am
 
 A lot of American tourists are starting to travel overseas this summer after taking a couple years off. Let's look at data for some common destinations. I will use `newCount()` to get data sets for Austria, Switzerland, and Greece from the beginning of May 2022.  
 
-```{r}
+```{r vacation data sets}
 austria <- newCount("Austria", "2022-05-01")
 switzerland <- newCount("Switzerland", "2022-05-01")
 greece <- newCount("Greece", "2022-05-01")
@@ -465,7 +463,7 @@ greece <- newCount("Greece", "2022-05-01")
 
 Let's plot the daily count of new cases for these countries. First, I am going to join the data sets by the date column, though. 
 
-```{r}
+```{r bar chart}
 vacation <- rbind(austria, switzerland, greece)
 
 ggplot(vacation, aes(fill=Country, y= newConfirmed, x=Date)) +

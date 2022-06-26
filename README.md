@@ -553,13 +553,13 @@ Canada.
 plotCases("Australia")
 ```
 
-![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/plotCases%20Aus%20and%20Canada-1.png)<!-- -->
 
 ``` r
 plotCases("Canada")
 ```
 
-![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/unnamed-chunk-7-2.png)<!-- -->
+![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/plotCases%20Aus%20and%20Canada-2.png)<!-- -->
 
 Looks like Australia had a lot less gradual increase in case counts, at
 least compared to Canada. Although both have a large climb right around
@@ -574,7 +574,6 @@ with an incredibly high fatality rate (and another with a really high
 case count, but not on the same scale).
 
 ``` r
-# Create a scatter plot of win pct vs. shots per game.
 plot1 <- ggplot(covid, aes(TotalConfirmed,
                                    FatalityRate,
                                    color=FatalityRate)) + 
@@ -595,7 +594,7 @@ plot1 <- ggplot(covid, aes(TotalConfirmed,
 plot1
 ```
 
-![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/Scatter%20plot-1.png)<!-- -->
 It is tough to see much here, since the outlier in red is skewing the
 y-axis. I wanted to see which country that was, and also the one skewing
 the x-axis (to a lesser degree).
@@ -654,7 +653,6 @@ with almost 87 million as of late June 2022. I plotted the same thing
 once more, but left out North Korea.
 
 ``` r
-# Create a scatter plot of win pct vs. shots per game.
 ggplot(covid[covid$Country != "Korea (North)",], aes(TotalConfirmed,
                                    FatalityRate,
                                    color=FatalityRate)) + 
@@ -673,7 +671,7 @@ ggplot(covid[covid$Country != "Korea (North)",], aes(TotalConfirmed,
   ggtitle("Fatality Rate vs. Cumulative Confirmed Cases of COVID-19")
 ```
 
-![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/scatter%20plot%20no%20nK-1.png)<!-- -->
 
 Now the scatter plot looks more reasonable, and it’s easy to see the
 legitimate outliers (Yemen for Fatality Rate and USA for Cases). And
@@ -808,7 +806,7 @@ ggplot(vacation, aes(fill=Country, y= newConfirmed, x=Date)) +
   ylab("New Cases")
 ```
 
-![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/bar%20chart-1.png)<!-- -->
 
 This plot is not as compelling as I had hoped because it appears that
 Switzerland is only reporting new cases every week or so, and Austria is
