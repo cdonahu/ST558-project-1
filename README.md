@@ -553,7 +553,7 @@ Canada.
 plotCases("Australia")
 ```
 
-![](/./README_files/figure-gfm/plotCases%20Aus%20and%20Canada-1.png)<!-- -->
+![](./README_files/figure-gfm/plotCases%20Aus%20and%20Canada-1.png)<!-- -->
 
 ``` r
 plotCases("Canada")
