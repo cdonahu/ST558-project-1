@@ -377,31 +377,31 @@ head(covid[order(covid$FatalityRate),], 25)
 ```
 
     ##                                       ID                         Country
-    ## 6   fab4a32e-c3ac-4f76-9d6a-ed36545d96f6                      Antarctica
-    ## 74  ad201080-746e-45d6-b982-63dae82d4041   Holy See (Vatican City State)
-    ## 111 55ccbae4-befe-45ac-81b1-8f560d4aad29                Marshall Islands
-    ## 115 85ac342a-f938-491f-80b8-6e8e64dbcc6b Micronesia, Federated States of
-    ## 21  228c5b7b-8a9f-4f83-8fd2-f7f9e66da400                          Bhutan
-    ## 77  9ad55824-a060-4889-bc32-6fe43d314498                         Iceland
-    ## 29  4286a5a5-f58c-4126-95da-035d921655fd                         Burundi
-    ## 179 8ade5617-44bd-4011-8175-007272b908aa                           Tonga
-    ## 158 0cf1ffca-4a5a-48c5-84be-106f28fbb5e2                       Singapore
-    ## 126 188a2e96-45e3-483e-b3fe-713abba69a51                     New Zealand
-    ## 133 8765358a-2506-4dc8-8bd2-bc8bae16d0e3                           Palau
-    ## 10  8f5a94d6-4b07-4f9c-9139-fb72cd57ba45                       Australia
-    ## 190 a78fc17d-5a5b-4d63-9438-7716e06e95d9                         Vanuatu
-    ## 92  62590406-3e02-4dd4-8f01-6ff99893bccc                   Korea (South)
-    ## 26  70b49dbc-ec75-4f33-9859-eb6adccfbea7               Brunei Darussalam
-    ## 108 8305c63b-0b8f-42bb-a15f-13c71de8627b                        Maldives
-    ## 173 5398c4ff-735e-47e9-8be8-c102d607ecec       Taiwan, Republic of China
-    ## 142 7cce51f9-035d-4525-90be-d3bf9a4dc2f0                           Qatar
-    ## 150 a9a0026c-2266-47e4-ba2e-a82dd3e4c6bf                           Samoa
-    ## 48  987f89ed-6a29-4129-bbb3-eef81aa6b4a9                         Denmark
-    ## 45  265fdaaf-a5dd-4079-bf39-f0041846e4a8                          Cyprus
-    ## 130 5848cca7-7b29-47f0-81fd-22dda1891108                          Norway
-    ## 118 3aea266e-644f-4cf8-90f3-4b62d7d30109                        Mongolia
-    ## 14  a2e88334-4eb2-40cd-a1cd-fcd7e4f7f37d                         Bahrain
-    ## 185 0ef33aee-a8d2-4bef-ba34-8439f656b1a9            United Arab Emirates
+    ## 6   646ec970-8bab-4812-97f2-f6ff0af52c67                      Antarctica
+    ## 74  1790f2b7-3579-44fa-bf6e-b63fd63b7657   Holy See (Vatican City State)
+    ## 111 b4266b34-7cd6-4df9-bc89-7d21b29af81e                Marshall Islands
+    ## 115 a89fab86-b42b-4893-8fd2-5fc2025de216 Micronesia, Federated States of
+    ## 21  b0fab17f-9798-4cb5-9a52-d757de551e53                          Bhutan
+    ## 77  68dc1984-2b18-49ee-9d9f-cb6a2910e117                         Iceland
+    ## 29  f417e6ee-e552-49c5-a9d8-c3136b4dcbfe                         Burundi
+    ## 179 1696707c-dd6b-4a1f-8e4b-25731afd3079                           Tonga
+    ## 158 1737509f-c00a-46ff-a8cd-f0dfca6880af                       Singapore
+    ## 126 efe994ba-e8dc-43fa-8372-5964b29790ea                     New Zealand
+    ## 133 efd18531-8e24-4a51-bee8-98ba42c30036                           Palau
+    ## 10  c0903c2f-e90f-488f-929d-1ed4bdb0bf53                       Australia
+    ## 190 062221fc-fdf8-4093-95aa-1e9e04ce831d                         Vanuatu
+    ## 92  6a3c4c55-8984-4744-9ab3-0b4327c3adba                   Korea (South)
+    ## 26  1f6cadbc-1cce-472b-a57e-11b75f44b0c6               Brunei Darussalam
+    ## 108 b43735e2-c165-411f-a7af-910aaddc4944                        Maldives
+    ## 173 78fac0b4-f86e-4109-a3f3-21231e8938e2       Taiwan, Republic of China
+    ## 142 6986e816-d032-48d9-abab-e04350bc0af8                           Qatar
+    ## 150 6fccb57b-02e8-4fc1-9363-0aecf84e97ac                           Samoa
+    ## 48  bbf04e14-f1c6-43e5-bd51-a67ed5699a32                         Denmark
+    ## 45  98109b14-3222-4d2d-86ac-d9695f7884a1                          Cyprus
+    ## 130 b64e5f00-167d-4bb4-85dc-4e3fd32956f5                          Norway
+    ## 118 a6d12e19-b1e1-4a57-89f8-c705dbc8e192                        Mongolia
+    ## 14  abe89703-21f5-4f22-9f10-fb499c6dc22c                         Bahrain
+    ## 185 44c6277b-e934-411e-8610-e58fd9c7f130            United Arab Emirates
     ##     CountryCode                        Slug NewConfirmed TotalConfirmed
     ## 6            AQ                  antarctica            0             11
     ## 74           VA holy-see-vatican-city-state            0             29
@@ -411,49 +411,49 @@ head(covid[order(covid$FatalityRate),], 25)
     ## 77           IS                     iceland            0         192991
     ## 29           BI                     burundi            0          42542
     ## 179          TO                       tonga            0          12079
-    ## 158          SG                   singapore            0        1397074
-    ## 126          NZ                 new-zealand            0        1309547
+    ## 158          SG                   singapore            0        1403242
+    ## 126          NZ                 new-zealand            0        1314155
     ## 133          PW                       palau            0           5201
-    ## 10           AU                   australia        33149        7978875
+    ## 10           AU                   australia        21437        8000312
     ## 190          VU                     vanuatu            0          11044
-    ## 92           KR                 korea-south            0       18319773
+    ## 92           KR                 korea-south            0       18326019
     ## 26           BN                      brunei            0         159591
     ## 108          MV                    maldives            0         180384
-    ## 173          TW                      taiwan            0        3533335
-    ## 142          QA                       qatar            0         378818
+    ## 173          TW                      taiwan            0        3573703
+    ## 142          QA                       qatar            0         379277
     ## 150          WS                       samoa            0          14812
     ## 48           DK                     denmark            0        3207777
     ## 45           CY                      cyprus            0         504717
-    ## 130          NO                      norway            0        1443637
+    ## 130          NO                      norway            0        1444043
     ## 118          MN                    mongolia            0         926282
-    ## 14           BH                     bahrain            0         615125
-    ## 185          AE        united-arab-emirates            0         935345
+    ## 14           BH                     bahrain            0         616588
+    ## 185          AE        united-arab-emirates            0         937037
     ##     NewDeaths TotalDeaths NewRecovered TotalRecovered       Date FatalityRate
-    ## 6           0           0            0              0 2022-06-25 0.0000000000
-    ## 74          0           0            0              0 2022-06-25 0.0000000000
-    ## 111         0           0            0              0 2022-06-25 0.0000000000
-    ## 115         0           0            0              0 2022-06-25 0.0000000000
-    ## 21          0          21            0              0 2022-06-25 0.0003519121
-    ## 77          0         153            0              0 2022-06-25 0.0007927831
-    ## 29          0          38            0              0 2022-06-25 0.0008932349
-    ## 179         0          12            0              0 2022-06-25 0.0009934597
-    ## 158         0        1408            0              0 2022-06-25 0.0010078206
-    ## 126         0        1405            0              0 2022-06-25 0.0010728901
-    ## 133         0           6            0              0 2022-06-25 0.0011536243
-    ## 10         52        9655            0              0 2022-06-25 0.0012100703
-    ## 190         0          14            0              0 2022-06-25 0.0012676566
-    ## 92          0       24516            0              0 2022-06-25 0.0013382262
-    ## 26          0         225            0              0 2022-06-25 0.0014098539
-    ## 108         0         300            0              0 2022-06-25 0.0016631187
-    ## 173         0        5969            0              0 2022-06-25 0.0016893388
-    ## 142         0         678            0              0 2022-06-25 0.0017897777
-    ## 150         0          29            0              0 2022-06-25 0.0019578720
-    ## 48          0        6487            0              0 2022-06-25 0.0020222727
-    ## 45          0        1072            0              0 2022-06-25 0.0021239625
-    ## 130         0        3280            0              0 2022-06-25 0.0022720393
-    ## 118         0        2179            0              0 2022-06-25 0.0023524154
-    ## 14          0        1492            0              0 2022-06-25 0.0024255233
-    ## 185         0        2310            0              0 2022-06-25 0.0024696770
+    ## 6           0           0            0              0 2022-06-26 0.0000000000
+    ## 74          0           0            0              0 2022-06-26 0.0000000000
+    ## 111         0           0            0              0 2022-06-26 0.0000000000
+    ## 115         0           0            0              0 2022-06-26 0.0000000000
+    ## 21          0          21            0              0 2022-06-26 0.0003519121
+    ## 77          0         153            0              0 2022-06-26 0.0007927831
+    ## 29          0          38            0              0 2022-06-26 0.0008932349
+    ## 179         0          12            0              0 2022-06-26 0.0009934597
+    ## 158         0        1408            0              0 2022-06-26 0.0010033907
+    ## 126         0        1411            0              0 2022-06-26 0.0010736937
+    ## 133         0           6            0              0 2022-06-26 0.0011536243
+    ## 10         27        9682            0              0 2022-06-26 0.0012102028
+    ## 190         0          14            0              0 2022-06-26 0.0012676566
+    ## 92          0       24522            0              0 2022-06-26 0.0013380975
+    ## 26          0         225            0              0 2022-06-26 0.0014098539
+    ## 108         0         300            0              0 2022-06-26 0.0016631187
+    ## 173         0        6120            0              0 2022-06-26 0.0017125094
+    ## 142         0         678            0              0 2022-06-26 0.0017876117
+    ## 150         0          29            0              0 2022-06-26 0.0019578720
+    ## 48          0        6487            0              0 2022-06-26 0.0020222727
+    ## 45          0        1072            0              0 2022-06-26 0.0021239625
+    ## 130         0        3280            0              0 2022-06-26 0.0022714005
+    ## 118         0        2179            0              0 2022-06-26 0.0023524154
+    ## 14          0        1492            0              0 2022-06-26 0.0024197681
+    ## 185         0        2311            0              0 2022-06-26 0.0024662847
 
 What stands out, interestingly, is that a lot of these countries in the
 top 25 (lowest) fatality rate list are island nations.
@@ -463,83 +463,83 @@ tail(covid[order(covid$FatalityRate),], 25)
 ```
 
     ##                                       ID                      Country
-    ## 75  7fcb9cc2-c4e0-4b0b-9392-34062571dbeb                     Honduras
-    ## 79  5716d4f6-1dfd-4698-b55e-66d8df9678a1                    Indonesia
-    ## 3   c89ef663-78b3-40b5-9547-3d47c8ec061c                      Algeria
-    ## 35  26cb5eb0-6de6-4e01-9103-17565715d8b6                         Chad
-    ## 73  4cf7592c-1052-4352-97a4-783750d236f9                        Haiti
-    ## 181 05606d37-17c7-4baa-9939-bb82311d4e83                      Tunisia
-    ## 137 8bfdf4ff-0add-4018-998a-4dd2ebe7f0d0                     Paraguay
-    ## 104 b790bc2a-7e33-4c15-b44c-0ccc4ba8d4ca       Macedonia, Republic of
-    ## 63  9a730dfd-47f9-47b9-bf2d-741bec855c4d                       Gambia
-    ## 106 7184c5fa-0269-41b1-a886-acb3def83cfd                       Malawi
-    ## 122 5bcdd3aa-1715-4579-abfd-7dafc9ade82f                      Myanmar
-    ## 27  c5894d27-f7f9-4cf3-8c77-7336ce79dfae                     Bulgaria
-    ## 128 2048e307-7769-4a3e-959e-88745c70a59a                        Niger
-    ## 99  0d4fe7a0-3ca2-45c0-9a01-7ce512ae5d13                      Liberia
-    ## 52  c98f4bde-68df-42c9-b24f-f5eb91711c2c                      Ecuador
-    ## 23  4dce8d35-b6e1-4ccd-bf91-332502b92195       Bosnia and Herzegovina
-    ## 1   35ef5171-8952-4501-9399-0550abbcbb05                  Afghanistan
-    ## 53  a956d116-3891-4618-a6bf-adef6dc696ae                        Egypt
-    ## 162 83201a47-9c25-492b-9c49-e3f2b8d0eb3b                      Somalia
-    ## 114 2f4f5caa-ce3c-4c13-bbc9-17c00bf76e6f                       Mexico
-    ## 172 daa3785a-e816-4de0-bba7-f7a7a07ebfb0 Syrian Arab Republic (Syria)
-    ## 138 12190cd7-6dde-4e5c-b35c-2f84d2020506                         Peru
-    ## 167 f42adc40-955f-450b-b336-e7cf121ab5a1                        Sudan
-    ## 193 bd554589-3c35-4aa4-9d6d-ddf2a2715c63                        Yemen
-    ## 91  da42d401-61c3-4f10-b6fe-07d0a4a17122                Korea (North)
+    ## 75  95495490-47f9-4c39-afd5-e582c230b6f7                     Honduras
+    ## 79  f0bf7d7c-2fc3-4e22-82b2-50f4247e03d3                    Indonesia
+    ## 3   3454fadd-0e90-4511-81d3-ed16eedf34b8                      Algeria
+    ## 35  8f38c7ec-ec6b-4d2a-84fe-08491fe0f620                         Chad
+    ## 73  84924446-b172-4c07-ad91-69f71c8a695a                        Haiti
+    ## 181 f3d07864-0f28-47dc-b936-400c09f336d7                      Tunisia
+    ## 137 68cd6ff0-ace3-43db-9f77-61beab5e8a4d                     Paraguay
+    ## 104 65433199-26df-4963-b099-f562fdf5976c       Macedonia, Republic of
+    ## 63  cdfefb3b-f6e4-44c2-a5cc-999c445ce184                       Gambia
+    ## 106 4ae19970-addb-451e-939f-45495c6c8212                       Malawi
+    ## 122 d2bbba15-a12e-48e3-8f97-98aee3159e4e                      Myanmar
+    ## 27  40e75d62-ea19-4e51-8a94-985e0bf4128b                     Bulgaria
+    ## 128 9562d4a2-df71-4cfc-a49b-b518a4c5f71f                        Niger
+    ## 99  796faef2-dc88-461e-8cd8-521155847c27                      Liberia
+    ## 52  6f491327-1483-441a-a3a6-9611395998e0                      Ecuador
+    ## 23  a59f17d1-211c-41d7-b656-8166e48506be       Bosnia and Herzegovina
+    ## 1   fe439931-1d7f-4415-8544-775c5fb1057c                  Afghanistan
+    ## 53  de607d41-5d1d-49f1-bdc9-a397dfa01f28                        Egypt
+    ## 162 b8fb24ac-3b48-4c14-aa32-824f61689b8e                      Somalia
+    ## 114 5253d61e-5c00-492a-9bb3-3fb9a82ab7a9                       Mexico
+    ## 172 baad1677-4f31-49f9-875b-f1e7409c47c8 Syrian Arab Republic (Syria)
+    ## 138 33da3075-9679-4cc8-859e-291426bda577                         Peru
+    ## 167 e001aeee-0ce0-4451-8659-78594eaa1235                        Sudan
+    ## 193 50db70dd-4bed-485e-8f2f-0ca52b704abe                        Yemen
+    ## 91  12891229-5b09-42bd-850f-db39d5af2a2b                Korea (North)
     ##     CountryCode                   Slug NewConfirmed TotalConfirmed NewDeaths
     ## 75           HN               honduras            0         426490         0
-    ## 79           ID              indonesia            0        6076894         0
-    ## 3            DZ                algeria            0         266025         0
+    ## 79           ID              indonesia            0        6078725         0
+    ## 3            DZ                algeria            0         266030         0
     ## 35           TD                   chad            0           7424         0
-    ## 73           HT                  haiti            0          31248         0
+    ## 73           HT                  haiti            0          31301         0
     ## 181          TN                tunisia            0        1046703         0
     ## 137          PY               paraguay            0         655532         0
     ## 104          MK              macedonia            0         313360         0
     ## 63           GM                 gambia            0          12002         0
     ## 106          MW                 malawi            0          86348         0
-    ## 122          MM                myanmar            0         613538         0
-    ## 27           BG               bulgaria            0        1169728         0
+    ## 122          MM                myanmar            0         613553         0
+    ## 27           BG               bulgaria            0        1169968         0
     ## 128          NE                  niger            0           9031         0
     ## 99           LR                liberia            0           7493         0
-    ## 52           EC                ecuador            0         898667         0
+    ## 52           EC                ecuador            0         901739         0
     ## 23           BA bosnia-and-herzegovina            0         378413         0
-    ## 1            AF            afghanistan            0         182033         0
+    ## 1            AF            afghanistan            0         182072         0
     ## 53           EG                  egypt            0         515645         0
     ## 162          SO                somalia            0          26748         0
-    ## 114          MX                 mexico        16133        5923086        24
+    ## 114          MX                 mexico        33646        5956732        65
     ## 172          SY                  syria            0          55920         0
-    ## 138          PE                   peru            0        3608565         0
+    ## 138          PE                   peru            0        3611123         0
     ## 167          SD                  sudan            0          62551         0
     ## 193          YE                  yemen            0          11824         0
     ## 91           KP            korea-north            0              1         0
     ##     TotalDeaths NewRecovered TotalRecovered       Date FatalityRate
-    ## 75        10904            0              0 2022-06-25   0.02556684
-    ## 79       156711            0              0 2022-06-25   0.02578801
-    ## 3          6875            0              0 2022-06-25   0.02584344
-    ## 35          193            0              0 2022-06-25   0.02599677
-    ## 73          837            0              0 2022-06-25   0.02678571
-    ## 181       28670            0              0 2022-06-25   0.02739077
-    ## 137       18963            0              0 2022-06-25   0.02892765
-    ## 104        9322            0              0 2022-06-25   0.02974853
-    ## 63          365            0              0 2022-06-25   0.03041160
-    ## 106        2645            0              0 2022-06-25   0.03063186
-    ## 122       19434            0              0 2022-06-25   0.03167530
-    ## 27        37246            0              0 2022-06-25   0.03184159
-    ## 128         310            0              0 2022-06-25   0.03432621
-    ## 99          294            0              0 2022-06-25   0.03923662
-    ## 52        35695            0              0 2022-06-25   0.03971994
-    ## 23        15799            0              0 2022-06-25   0.04175068
-    ## 1          7717            0              0 2022-06-25   0.04239341
-    ## 53        24722            0              0 2022-06-25   0.04794384
-    ## 162        1361            0              0 2022-06-25   0.05088231
-    ## 114      325511            0              0 2022-06-25   0.05495632
-    ## 172        3150            0              0 2022-06-25   0.05633047
-    ## 138      213432            0              0 2022-06-25   0.05914595
-    ## 167        4951            0              0 2022-06-25   0.07915141
-    ## 193        2149            0              0 2022-06-25   0.18174899
-    ## 91            6            0              0 2022-06-25   6.00000000
+    ## 75        10904            0              0 2022-06-26   0.02556684
+    ## 79       156714            0              0 2022-06-26   0.02578074
+    ## 3          6875            0              0 2022-06-26   0.02584295
+    ## 35          193            0              0 2022-06-26   0.02599677
+    ## 73          837            0              0 2022-06-26   0.02674036
+    ## 181       28670            0              0 2022-06-26   0.02739077
+    ## 137       18963            0              0 2022-06-26   0.02892765
+    ## 104        9322            0              0 2022-06-26   0.02974853
+    ## 63          365            0              0 2022-06-26   0.03041160
+    ## 106        2645            0              0 2022-06-26   0.03063186
+    ## 122       19434            0              0 2022-06-26   0.03167453
+    ## 27        37246            0              0 2022-06-26   0.03183506
+    ## 128         310            0              0 2022-06-26   0.03432621
+    ## 99          294            0              0 2022-06-26   0.03923662
+    ## 52        35705            0              0 2022-06-26   0.03959571
+    ## 23        15799            0              0 2022-06-26   0.04175068
+    ## 1          7717            0              0 2022-06-26   0.04238433
+    ## 53        24722            0              0 2022-06-26   0.04794384
+    ## 162        1361            0              0 2022-06-26   0.05088231
+    ## 114      325576            0              0 2022-06-26   0.05465682
+    ## 172        3150            0              0 2022-06-26   0.05633047
+    ## 138      213443            0              0 2022-06-26   0.05910710
+    ## 167        4951            0              0 2022-06-26   0.07915141
+    ## 193        2149            0              0 2022-06-26   0.18174899
+    ## 91            6            0              0 2022-06-26   6.00000000
 
 The worst fatality rates, meanwhile, seem to include not just generally
 poorer countries, but many that are also war-torn.
@@ -553,13 +553,13 @@ Canada.
 plotCases("Australia")
 ```
 
-![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/unnamed-chunk-62-1.png)<!-- -->
+![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ``` r
 plotCases("Canada")
 ```
 
-![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/unnamed-chunk-62-2.png)<!-- -->
+![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/unnamed-chunk-7-2.png)<!-- -->
 
 Looks like Australia had a lot less gradual increase in case counts, at
 least compared to Canada. Although both have a large climb right around
@@ -595,7 +595,7 @@ plot1 <- ggplot(covid, aes(TotalConfirmed,
 plot1
 ```
 
-![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/unnamed-chunk-63-1.png)<!-- -->
+![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 It is tough to see much here, since the outlier in red is skewing the
 y-axis. I wanted to see which country that was, and also the one skewing
 the x-axis (to a lesser degree).
@@ -605,11 +605,11 @@ head(covid[order(covid$TotalConfirmed),], 5)
 ```
 
     ##                                       ID                         Country
-    ## 91  da42d401-61c3-4f10-b6fe-07d0a4a17122                   Korea (North)
-    ## 6   fab4a32e-c3ac-4f76-9d6a-ed36545d96f6                      Antarctica
-    ## 111 55ccbae4-befe-45ac-81b1-8f560d4aad29                Marshall Islands
-    ## 74  ad201080-746e-45d6-b982-63dae82d4041   Holy See (Vatican City State)
-    ## 115 85ac342a-f938-491f-80b8-6e8e64dbcc6b Micronesia, Federated States of
+    ## 91  12891229-5b09-42bd-850f-db39d5af2a2b                   Korea (North)
+    ## 6   646ec970-8bab-4812-97f2-f6ff0af52c67                      Antarctica
+    ## 111 b4266b34-7cd6-4df9-bc89-7d21b29af81e                Marshall Islands
+    ## 74  1790f2b7-3579-44fa-bf6e-b63fd63b7657   Holy See (Vatican City State)
+    ## 115 a89fab86-b42b-4893-8fd2-5fc2025de216 Micronesia, Federated States of
     ##     CountryCode                        Slug NewConfirmed TotalConfirmed
     ## 91           KP                 korea-north            0              1
     ## 6            AQ                  antarctica            0             11
@@ -617,34 +617,34 @@ head(covid[order(covid$TotalConfirmed),], 5)
     ## 74           VA holy-see-vatican-city-state            0             29
     ## 115          FM                  micronesia            0             38
     ##     NewDeaths TotalDeaths NewRecovered TotalRecovered       Date FatalityRate
-    ## 91          0           6            0              0 2022-06-25            6
-    ## 6           0           0            0              0 2022-06-25            0
-    ## 111         0           0            0              0 2022-06-25            0
-    ## 74          0           0            0              0 2022-06-25            0
-    ## 115         0           0            0              0 2022-06-25            0
+    ## 91          0           6            0              0 2022-06-26            6
+    ## 6           0           0            0              0 2022-06-26            0
+    ## 111         0           0            0              0 2022-06-26            0
+    ## 74          0           0            0              0 2022-06-26            0
+    ## 115         0           0            0              0 2022-06-26            0
 
 ``` r
 tail(covid[order(covid$TotalConfirmed),], 5)
 ```
 
     ##                                       ID                  Country CountryCode
-    ## 65  43aba47a-2b6d-453e-aab5-0678d5d197cc                  Germany          DE
-    ## 61  38621799-00eb-4e9a-9a13-e27de8eb0776                   France          FR
-    ## 25  d9f816e3-d69a-4fe5-9217-a67d4e7b2341                   Brazil          BR
-    ## 78  c43d0d7d-785c-4076-a70a-6ef238b0972e                    India          IN
-    ## 187 963f2cac-5704-4105-b8e5-69883304c62c United States of America          US
+    ## 65  b8b4ff74-d213-4070-8dbf-bfedc12cf278                  Germany          DE
+    ## 61  35ba7b8c-cf52-4bd0-bc8e-d2afb3eb072e                   France          FR
+    ## 25  cce2870a-119e-49c1-802d-eb1cfc54adec                   Brazil          BR
+    ## 78  f28b00b6-b2e9-4103-9dc9-726047c17f11                    India          IN
+    ## 187 543a7052-c492-4c6b-a4e8-3e52fcdc2334 United States of America          US
     ##              Slug NewConfirmed TotalConfirmed NewDeaths TotalDeaths NewRecovered
-    ## 65        germany        89336       27771111        84      140734            0
+    ## 65        germany            1       27771112         0      140734            0
     ## 61         france            0       30714200         0      150356            0
-    ## 25         brazil        60384       32023166       334      670229            0
-    ## 78          india        15940       43378234        20      524974            0
-    ## 187 united-states       152095       86909716       447     1015789            0
+    ## 25         brazil            0       32023166         0      670229            0
+    ## 78          india        11739       43389973        25      524999            0
+    ## 187 united-states        39372       86949088       144     1015933            0
     ##     TotalRecovered       Date FatalityRate
-    ## 65               0 2022-06-25  0.005067640
-    ## 61               0 2022-06-25  0.004895325
-    ## 25               0 2022-06-25  0.020929505
-    ## 78               0 2022-06-25  0.012102245
-    ## 187              0 2022-06-25  0.011687865
+    ## 65               0 2022-06-26  0.005067640
+    ## 61               0 2022-06-26  0.004895325
+    ## 25               0 2022-06-26  0.020929505
+    ## 78               0 2022-06-26  0.012099547
+    ## 187              0 2022-06-26  0.011684228
 
 If we rank the data by number of confirmed cases (cumulative), we can
 see that the outlier in red on the scatter plot is there because North
@@ -673,7 +673,7 @@ ggplot(covid[covid$Country != "Korea (North)",], aes(TotalConfirmed,
   ggtitle("Fatality Rate vs. Cumulative Confirmed Cases of COVID-19")
 ```
 
-![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/unnamed-chunk-65-1.png)<!-- -->
+![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 Now the scatter plot looks more reasonable, and it’s easy to see the
 legitimate outliers (Yemen for Fatality Rate and USA for Cases). And
@@ -750,12 +750,12 @@ covid %>%
     ## # A tibble: 6 × 8
     ##   Continent      n meanDeaths medianDeaths meanCases medianCases meanNewCases
     ##   <chr>      <int>      <dbl>        <dbl>     <dbl>       <dbl>        <dbl>
-    ## 1 Africa        54      4720.        992     222555.      60976            0 
-    ## 2 Americas      35     78750.       5726    4599341.     525539         6915.
+    ## 1 Africa        54      4720.        992     222659.      60990.           0 
+    ## 2 Americas      35     78758.       5728    4602151.     525716         2473.
     ## 3 Antarctica     1         0           0         11          11            0 
-    ## 4 Asia          48     30082.       8912.   3249358.     859694          766.
-    ## 5 Europe        45     41216.      13822    4513956.    1443637         5304.
-    ## 6 Oceania       12      1068.         21.5   788880.      13446.        2762.
+    ## 4 Asia          48     30087.       8912.   3251606.     859711          676.
+    ## 5 Europe        45     41219       13822    4517730.    1444043         1340.
+    ## 6 Oceania       12      1071.         21.5   791050.      13446.        1786.
     ## # … with 1 more variable: medianNewCases <dbl>
 
 Excluding Antarctica and Oceania due to the small numbers of countries
@@ -808,7 +808,7 @@ ggplot(vacation, aes(fill=Country, y= newConfirmed, x=Date)) +
   ylab("New Cases")
 ```
 
-![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/unnamed-chunk-70-1.png)<!-- -->
+![](/Users/claudialdonahue/Documents/00%20MOR/ST%20558%20Data%20Science%20for%20Statisticians/Project%201/ST558-project-1/README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
 This plot is not as compelling as I had hoped because it appears that
 Switzerland is only reporting new cases every week or so, and Austria is

@@ -486,17 +486,7 @@ To summarize everything I did in this vignette, I built functions to interact wi
 I hope this vignette helps my readers more successfully interact with APIs. It has been good practice for me.  
 
 
-```{r, eval = FALSE, include=FALSE}
-library(rmarkdown)
-rmarkdown::render('./README.Rmd',
-                  output_format = 'github_document',
-                  output_dir = './',
-                  output_options = list(
-                    df_print = 'default',
-                    html_preview = FALSE # to remove .html file creation
-                    )
-                  )
-```
+
 
 
 
